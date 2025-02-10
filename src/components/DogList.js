@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 // Beispielhafte Hundeliste – in einer echten Anwendung über eine API laden
 const dummyDogs = [
-  { id: 1, name: 'Hund A' },
-  { id: 2, name: 'Hund B' },
-  { id: 3, name: 'Hund C' },
+  { id: 1083868, name: 'Reggae' },
+  { id: 500934, name: 'Hannah' },
 ];
 
 function DogList({ onDogSelect }) {

@@ -1,7 +1,7 @@
 // Beispiel: Funktion zum Abrufen der Ahnentafel eines Hundes
 export async function fetchFamilyTree(dogId) {
     // Ersetze diese URL durch die tatsächliche API-URL von K9data
-    const apiUrl = `https://api.k9data.example.com/ahnentafel/${dogId}`;
+    const apiUrl = `https://www.k9data.com/pedigree.asp?ID=${dogId}`;
   
     try {
       const response = await fetch(apiUrl);
