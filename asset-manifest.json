@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/epiapp/static/js/main.0c695f39.js",
+    "main.js": "/epiapp/static/js/main.c78a1bc1.js",
     "index.html": "/epiapp/index.html",
-    "main.0c695f39.js.map": "/epiapp/static/js/main.0c695f39.js.map"
+    "main.c78a1bc1.js.map": "/epiapp/static/js/main.c78a1bc1.js.map"
   },
   "entrypoints": [
-    "static/js/main.0c695f39.js"
+    "static/js/main.c78a1bc1.js"
   ]
 }
