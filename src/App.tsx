@@ -6,7 +6,7 @@ import Layout from "./components/Layout";
 
 const App: React.FC = () => {
   return (
-    <Router basename="epiapp">
+    <Router>
       <Routes>
         <Route  element={<Layout />}>
         <Route path="/" element={<HomePage />} />
