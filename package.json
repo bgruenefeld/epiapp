@@ -4,18 +4,24 @@
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://bgruenefeld.github.io/epiapp",
+  "proxy": "https://mein-backend.onrender.com",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+    "start:frontend": "cd client && npm install && npm run build && npx serve -s build",
+    "start:backend": "cd server && npm install && node server.js"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
+    "concurrently": "^9.1.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.1.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
@@ -37,5 +43,4 @@
     "typescript-eslint": "^8.22.0",
     "vite": "^6.1.0"
   }
-  
 }
