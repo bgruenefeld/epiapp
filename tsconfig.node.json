@@ -4,7 +4,9 @@
     "incremental": true,
     "target": "ES2022",
     "lib": ["ES2023"],
-    "module": "ESNext",
+    // "module": "ESNext",
+    "module": "ES2020",
+    "allowJs": true,
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -18,7 +20,7 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
   },
-  "include": ["vite.config.ts"]
+  "include": ["vite.config.js"]
 }
