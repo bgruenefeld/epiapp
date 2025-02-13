@@ -6,10 +6,8 @@
   "homepage": "https://bgruenefeld.github.io/epiapp",
   "proxy": "https://mein-backend.onrender.com",
   "scripts": {
-    
     "dev": "vite",
-  "prebuild": "echo '🌍 START DEBUGGING'; ls -lah node_modules/@types/react || echo '❌ @types/react MISSING!'; echo '✅ DEBUGGING DONE!'",
-    
+    "prebuild": "echo '🌍 START DEBUGGING'; ls -lah node_modules/@types/react || echo '❌ @types/react MISSING!'; echo '✅ DEBUGGING DONE!'",
     "build": "tsc -p tsconfig.app.json && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -20,18 +18,22 @@
     "start:frontend": "npm install && npm run build && npx serve -s build",
     "start:backend": "cd server && npm install && node server.js"
   },
+  "resolutions": {
+    "@types/react": "18.2.62",
+    "@types/react-dom": "18.2.14"
+  },
   "dependencies": {
     "bootstrap": "^5.3.3",
     "concurrently": "^9.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^7.1.5",
-  "@types/react": "^18.2.62",
-  "@types/react-dom": "^18.2.14"
+    "@types/react": "18.2.62",
+  "@types/react-dom": "18.2.14"
+
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
-
     "@typescript-eslint/eslint-plugin": "^8.24.0",
     "@typescript-eslint/parser": "^8.24.0",
     "@vitejs/plugin-react": "^4.3.4",
