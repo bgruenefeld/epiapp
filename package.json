@@ -6,6 +6,7 @@
   "homepage": "https://bgruenefeld.github.io/epiapp",
   "proxy": "https://mein-backend.onrender.com",
   "scripts": {
+     "debug": "ls -lah node_modules/@types/react",
     "dev": "vite",
     "prebuild": "echo NODE_ENV=$NODE_ENV",
     "build": "tsc -p tsconfig.app.json && vite build",
