@@ -13,6 +13,7 @@
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
+    "postinstall": "npm install --save-dev @types/react @types/react-dom",
     "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
     "start:frontend": "npm install && npm run build && npx serve -s build",
     "start:backend": "cd server && npm install && node server.js"
