@@ -1,10 +1,19 @@
 
 import './App.css'
-
+import logo from "/Breedoptimizer.webp"; 
 function App() {
   
   return (
     <>
+    
+    <div className="container">
+    <header className="header">
+        <img src={logo} alt="BreedOptimizer Logo" className="logo" />
+        <div className="title-container">
+          <h1>BreedOptimizer</h1>
+          <h2>Intelligente Zuchtplanung für Labrador Retriever</h2>
+        </div>
+      </header>
       {/* Einleitungstext */}
       <div className="text-container">
         Die genetische Vielfalt beim Labrador Retriever nimmt stetig ab,
@@ -31,16 +40,16 @@ function App() {
         <h3>🔗 BreedOptimizer – Weil verantwortungsvolle Zucht Planung erfordert.</h3> 
       </div>
       <div className="app-grid">
-        {/* <div className="app-card" onClick={() => navigate("/episcorer")}>
+        <div className="app-card" >
           <h3>🧬 Episcorer</h3>
           <p>Analyse der Epilepsiebelastung in Ahnentafeln.</p>
         </div>
-        <div className="app-card" onClick={() => navigate("/coi-calculator")}>
+        <div className="app-card" >
           <h3>📊 COI Calculator</h3>
           <p>Berechnung des Inzuchtkoeffizienten (COI) für Zuchtplanung.</p>
-        </div> */}
+        </div>
       </div>
-   
+      </div>
     </>
   )
 }

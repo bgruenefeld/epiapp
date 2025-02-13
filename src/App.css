@@ -1,42 +1,140 @@
-#root {
-  max-width: 1280px;
+/* 🌙 Dark Mode Basis-Styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #121212; /* Dunkler Hintergrund */
+  color: #ffffff;
+  display: flex;
+  justify-content: center; /* Inhalte zentrieren */
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* 📌 Haupt-Container */
+.container {
+  max-width: 1200px; /* Größere Breite für Desktop */
+  width: 90%; /* Passt sich flexibel an */
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+  background: #1e1e1e; /* Einheitlicher Hintergrund */
+  border-radius: 10px; /* Abgerundete Ecken */
 }
 
+/* 🎨 Header mit Logo & Titel */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Logo & Text optimal ausrichten */
+  gap: 20px;
+  max-width: 100%;
+  text-align: left;
+}
+
+/* 🐶 Logo-Styling */
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  width: 150px; /* Größeres Logo für breite Bildschirme */
+  height: auto;
+  max-width: 100%;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* 📜 Textbereiche */
+.text-container {
+  text-align: left;
+  margin-top: 20px;
+  line-height: 1.6;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  background: #2a2a2a; /* Einheitlicher dunkler Hintergrund für Textboxen */
+  padding: 15px;
+  border-radius: 8px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+/* 🖥️ Verbesserung für große Bildschirme */
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1400px; /* Breitere Darstellung für große Monitore */
   }
 }
 
-.card {
-  padding: 2em;
+/* 📱 Mobile Optimierung */
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .logo {
+    width: 100px;
+  }
+
+  .text-container {
+    text-align: center;
+    padding: 0 10px;
+  }
+
+  ul {
+    padding-left: 0;
+    text-align: left;
+  }
+
+  h1, h3 {
+    font-size: 1.4em;
+  }
 }
 
-.read-the-docs {
-  color: #888;
+🎨 Header-Styling
+/* .header {
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  gap: 20px;
+  padding: 20px;
+  background-color: #2a2a2a;
+  border-bottom: 2px solid #007bff;
+} */
+
+/* 🐶 Logo-Styling */
+/* .logo {
+  width: 100px; 
+  height: auto;
+} */
+
+/* 📜 Überschrift-Gruppe */
+.header-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+app-navigation button:hover {
+  background: #0056b3;
+}
+
+/* 📜 Kartendarstellung */
+.app-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.app-card {
+  background: #2a2a2a;
+  padding: 20px;
+  width: 200px;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.app-card:hover {
+  background: #007bff;
+  color: white;
 }
