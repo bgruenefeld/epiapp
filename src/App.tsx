@@ -23,10 +23,10 @@ function App() {
         Mit BreedOptimizer bieten wir eine datengetriebene Plattform, die Züchtern hilft, nachhaltige und fundierte Zuchtentscheidungen zu treffen. 
         Basierend auf frei verfügbaren Datenquellen wie K9data.com, Saritas Blog und der DRC-Datenbank entwickeln wir Analysetools, 
         die den Zuchtprozess intelligenter, effizienter und transparenter gestalten.
-      </div>
+      {/* </div>
 
-      {/* Vorteile */}
-      <div className="text-container">
+     
+      <div className="text-container"> */}
         <h3>Was BreedOptimizer Züchtern bietet:</h3>
         <ul>
           <li>Genetische Diversitätsanalyse zur Vermeidung von Inzucht und genetischen Engpässen</li>
