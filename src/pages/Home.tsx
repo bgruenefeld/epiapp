@@ -23,6 +23,19 @@ const Home: React.FC = () => {
         damit sie die Zukunft der Labrador-Zucht aktiv und nachhaltig gestalten können.
 
         <h3>🔗 BreedOptimizer – Weil verantwortungsvolle Zucht Planung erfordert.</h3> 
+        <div className="app-grid">
+        
+        <div className="app-card" >
+          <h3>🧬 Episcorer</h3>         
+            <p>Analyse der Epilepsiebelastung in Ahnentafeln.</p>
+        </div>
+        
+        <div className="app-card" >
+          <h3>📊 COI Calculator</h3>        
+            <p>Berechnung des Inzuchtkoeffizienten (COI) für Zuchtplanung.</p>
+          </div>        
+      
+      </div>
       </div>
     </div>
   );
