@@ -1,5 +1,5 @@
 
-import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from "/Breedoptimizer.webp"; 
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
 import Episcorer from "./pages/Episcorer";
@@ -10,24 +10,24 @@ function App() {
   return (
     <>
     <Router>
-      <div className="container">
-      <header className="header">
-        <img src={logo} alt="BreedOptimizer Logo" className="logo" />
-        <div className="title-container">
-          <h1>BreedOptimizer</h1>
-          <h2>Intelligente Zuchtplanung für Labrador Retriever</h2>
+    <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div className="container-fluid">
+      <img src={logo} alt="BreedOptimizer Logo" className="bi me-2" width="40" height="32" />
+        <a className="navbar-brand" href="#">BreedOptimizer</a>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarCollapse">
+          <ul className="navbar-nav me-auto mb-2 mb-md-0">
+            <li className="nav-item nav-link"><Link to="/home" className="nav-item nav-link">Home</Link></li>
+            <li className="nav-item nav-link"><Link to="/episcorer" className="nav-item nav-link">Episcorer</Link></li>
+            <li className="nav-item nav-link"><Link to="/coi-calculator" className="nav-item nav-link">Coi Calculator</Link></li>
+          </ul>
         </div>
-      </header>
-
-        {/* Navigation */}
-        <nav className="nav">
-          <Link to="/home">Home</Link> |
-          <Link to="/episcorer">Episcorer</Link> |
-          <Link to="/coi-calculator">Coi Calculator</Link>
-        </nav>
-
+      </div>
+    </nav>
         {/* Seitenwechsel */}
-        <main className="content">
+        <main className="container" style={{ paddingTop: "80px" }}>
           <Routes>
             <Route path="/" element={<Navigate to="/home" />} />
             <Route path="/home" element={<Home />} />
@@ -35,42 +35,9 @@ function App() {
             <Route path="/coi-calculator" element={<CoiCalculator />} />
           </Routes>
         </main>
-      </div>
+      
     </Router>
-    {/* <Router>
-    <div className="container">
-    <header className="header">
-        <img src={logo} alt="BreedOptimizer Logo" className="logo" />
-        <div className="title-container">
-          <h1>BreedOptimizer</h1>
-          <h2>Intelligente Zuchtplanung für Labrador Retriever</h2>
-        </div>
-      </header>
-      
-      
-      <div className="app-grid">
-        <Link to="/episcorer">
-        <div className="app-card" >
-          <h3>🧬 Episcorer</h3>         
-            <p>Analyse der Epilepsiebelastung in Ahnentafeln.</p>
-        </div>
-        </Link>
-        <Link to="/coi-calculator">
-        <div className="app-card" >
-          <h3>📊 COI Calculator</h3>        
-            <p>Berechnung des Inzuchtkoeffizienten (COI) für Zuchtplanung.</p>
-          </div>        
-      </Link>
-      </div>
-        <main className="content">
-          <Routes>
-            <Route path="/" element={<h2>Willkommen zur BreedOptimizer App!</h2>} />
-            <Route path="/episcorer" element={<Episcorer />} />
-            <Route path="/coi-calculator" element={<CoiCalculator />} />
-          </Routes>
-        </main>
-      </div>
-      </Router> */}
+    
     </>
   )
 }

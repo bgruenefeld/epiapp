@@ -23,10 +23,9 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh
+  padding: 0;
+  background-color: #121212;
+  color: #fff;
 }
 
 h1 {
@@ -85,19 +84,24 @@ body {
   max-width: 1200px;
   width: 90%;
   margin: 0 auto;
-  padding: 20px;
+  padding-top: 100px; /* Platz für den fixierten Header */
   box-sizing: border-box;
   background: #1e1e1e;
-  border-radius: 10px
+  border-radius: 10px;
 }
 
 .header {
+  position: fixed; /* Fixiert den Header am oberen Rand */
+  top: 0; /* Ganz oben */
+  left: 0;
+  width: 100%; /* Volle Breite */
+  background-color: #1e1e1e; /* Hintergrundfarbe */
+  z-index: 1000; /* Stellt sicher, dass er über anderen Elementen bleibt */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
-  max-width: 100%;
-  text-align: left
+  padding: 15px 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Schatten */
 }
 
 .logo {
@@ -105,7 +109,9 @@ body {
   height: auto;
   max-width: 100%
 }
-
+.tree-container{
+  background: #cbc8c8;
+}
 .text-container {
   text-align: left;
   margin-top: 20px;
