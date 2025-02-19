@@ -2,7 +2,7 @@
 
  export class EpiDogATService {
     
-    private serverURL = "http://localhost:10000";
+    private serverURL = "https://epiapp-server.onrender.com";
 
     public async fetchData(): Promise<Response|undefined> {
         try {
