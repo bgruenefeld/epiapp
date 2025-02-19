@@ -16,7 +16,7 @@ const agent = new https.Agent({
 });
 
 // Middleware
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 // Test-Route
