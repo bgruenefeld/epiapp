@@ -90,35 +90,35 @@ export class EpiDogATService {
           console.log("current dog", dog)
           const score = this.scoreRepo.getScoreByDogName(dog)?.Score
 
-          data(selector).each((index2, element) => {
-              const link = data(element);
-              console.log("link.text()",link.text())
+            data(selector).each((index2, element) => {
+                  const link = data(element);
+                  console.log("link.text()",link.text())
 
-              if(link.text().trim().toLowerCase().includes(dog.toLowerCase())){
-                const hrefValue = this.getK9DataId(link.attr('href') as string);
-                if(hrefValue !== undefined){
-                  link.attr('onclick', "epiat("+hrefValue+")");
-                  link.attr('href', "#");
-                }
+                  if(link.text().trim().toLowerCase().includes(dog.toLowerCase())){
+                    const hrefValue = this.getK9DataId(link.attr('href') as string);
+                    if(hrefValue !== undefined){
+                      link.attr('onclick', "epiat("+hrefValue+")");
+                      link.attr('href', "#");
+                    }
 
-                const value = score
-                let lightness = "0"
+                    const value = score
+                    let lightness = "0"
 
-                if(value !== undefined){
-                  lightness = (100 - (value / 100) * 90).toFixed(0);
-                }
-                  
+                    if(value !== undefined){
+                      lightness = (100 - (value / 100) * 90).toFixed(0);
+                    }
+                      
 
-                const linkHtml = "<a id="+index2+" style='cursor:pointer;font-size:bold;background-color: hsl(0, 100%, "+lightness+"%)'> ("+score+")</a>"
-                const alink = cheerio.load(linkHtml)
-                const id = "#"+index2
-                const mylink = alink(id);
-                mylink.attr('onclick', "showDetails(this)");
-                // console.log("dogname data-text", dogName)
-                mylink.attr('data-text',dog)
-                link.after(alink.html());
-        }
-      });
+                    const linkHtml = "<a id="+index2+" style='cursor:pointer;font-size:bold;background-color: hsl(0, 100%, "+lightness+"%)'> ("+score+")</a>"
+                    const alink = cheerio.load(linkHtml)
+                    const id = "#"+index2
+                    const mylink = alink(id);
+                    mylink.attr('onclick', "showDetails(this)");
+                    // console.log("dogname data-text", dogName)
+                    mylink.attr('data-text',dog)
+                    link.after(alink.html());
+            }
+          });
 
           data(mainDog).each((index3, mainDog2) =>{
             // console.log("maindog", mainDog)
