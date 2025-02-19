@@ -19,7 +19,7 @@ const Home: React.FC = () => {
           <p>
             <h4>Was BreedOptimizer Züchtern bietet:</h4>
             <ul>
-              <li>Genetische Diversitätsanalyse zur Vermeidung von Inzucht und genetischen Engpässen</li>
+              <li>Diversitätsanalyse zur Vermeidung von Inzucht und genetischen Engpässen</li>
               <li>Optimierte Zuchtplanung mit datenbasierten Empfehlungen für die beste Verpaarung</li>
               <li>Detaillierte Abstammungsanalysen zur besseren Einschätzung von Gesundheits- und Leistungspotenzial</li>
               <li>Werkzeuge für eine langfristig stabile Zuchtstrategie</li>
@@ -37,14 +37,14 @@ const Home: React.FC = () => {
         </div>
         <h3 className="fs-2 text-body-emphasis">🧬 Episcorer</h3>         
         <p>Analyse der Epilepsiebelastung in Ahnentafeln.</p>
-        <li className="icon-link"><Link to="/episcorer" className="icon-link">Episcorer</Link></li>
+        <li className="icon-link"><Link to="/coi-calculator" className="icon-link">Episcorer</Link></li>
       </div>
       <div className="feature col">
         <div className="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
         </div>
         <h3>📊 COI Calculator</h3>        
         <p>Berechnung des Inzuchtkoeffizienten (COI) für die Zuchtplanung.</p>
-         <li className="icon-link"><Link to="/coi-calculator" className="icon-link">Coi Calculator</Link></li>
+         <li className="icon-link"><Link to="/episcorer" className="icon-link">Coi Calculator</Link></li>
       </div>  
     </div>
     </div>
