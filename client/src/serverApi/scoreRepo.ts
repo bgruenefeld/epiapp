@@ -37,42 +37,25 @@ export class ScoreRepo{
     }
         
     private async readScoreFile(filename: string): Promise<Map<string, Score>> {
-          // CSV-Datei einlesen
-          // Erstellen einer Map: Key = Hundename, Value = { Score, EpiProgeny }
-        //   const filePath = new URL(filename, import.meta.url).href;
-        //     console.log("Dateipfad:", filePath);
-            const response = await fetch("./"+filename); // Stelle sicher, dass die Datei im `public/`-Ordner liegt
-            const csvData = await response.text();
-        //const filePath = path.join(__dirname, ".", filename);
-        const dogMap = new Map<string, { Score: number; EpiProgeny: string[] }>();
         
-        // fs.readFile(filePath, 'utf8', (readErr, csvData) => {
-        //     if (readErr) {
-        //         console.error('Fehler beim Lesen der CSV-Datei:', readErr);
-        //         return;
-        //     }
-            // CSV parsen; header: true sorgt dafür, dass die erste Zeile als Header genutzt wird,
-            // skipEmptyLines: true ignoriert leere Zeilen.
-            const result = Papa.parse(csvData, {
+        const response = await fetch("./"+filename); // Stelle sicher, dass die Datei im `public/`-Ordner liegt
+        const csvData = await response.text();
+        const dogMap = new Map<string, { Score: number; EpiProgeny: string[] }>();
+
+        const result = Papa.parse(csvData, {
             header: true,
             skipEmptyLines: true,
-            });
+        }); 
         
-            
+        const records = result.data as { [key: string]: string }[];
         
-            // Typisieren der geparsten Daten
-            const records = result.data as { [key: string]: string }[];
+        records.forEach(record => {
+        const name = record.Hundename.trim();
+        const score = parseFloat(record.Score);
+        const epiProgeny = record.EpiProgeny.split(",");
         
-            records.forEach(record => {
-            const name = record.Hundename.trim();
-            const score = parseFloat(record.Score);
-            const epiProgeny = record.EpiProgeny.split(",");
+        dogMap.set(name, { Score: score, EpiProgeny: epiProgeny });
         
-            dogMap.set(name, { Score: score, EpiProgeny: epiProgeny });
-        // });
-    
-        // Ausgabe der Map zur Kontrolle
-       
         });
         console.log("dogMap successfully created:",dogMap.size);
         return dogMap;
