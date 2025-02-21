@@ -24,10 +24,20 @@ app.get("/", (req, res) => {
   res.json({ message: "Server läuft!" });
 });
 
-// Beispiel-API
+
 app.get("/api/data", (req, res) => {
   const service = new EpiDogATService()
   const dogs = service.getAllEpiDogs()
+  res.json({ dogs });
+});
+
+app.get("/api/epiprogeny/:dogName", (req, res) => {
+  //const dogName = req.params.dogName;
+  const encodedDogName = req.params.dogName;
+  const dogName = decodeURIComponent(encodedDogName);
+  const service = new EpiDogATService()
+  
+  const dogs = service.getEpiProgenyByDogName(dogName);
   res.json({ dogs });
 });
 

@@ -75,6 +75,14 @@ export class EpiDogATService {
         }
       }
       
+      public getEpiProgenyByDogName(dogName: string): string[]{
+        console.log("getEpiProgenyByDogName for dogname", "-" + dogName + "-");
+        const epiProgeny = this.scoreRepo.getScoreByDogName(dogName)?.EpiProgeny;
+        if(epiProgeny !== undefined){
+          return epiProgeny
+        }
+        return []
+      }
 
       public async getATWithEpiScores(html:string):Promise<string>{
         if(this.scoreRepo === undefined){
@@ -87,13 +95,11 @@ export class EpiDogATService {
         console.log("getATWithEpiScores getAllScoredDogs")
         this.scoreRepo.getAllScoredDogs().forEach(dog => {
           const selector = "a:contains("+dog+ ")";
-          console.log("current dog", dog)
           const score = this.scoreRepo.getScoreByDogName(dog)?.Score
 
             data(selector).each((index2, element) => {
                   const link = data(element);
-                  console.log("link.text()",link.text())
-
+                  
                   if(link.text().trim().toLowerCase().includes(dog.toLowerCase())){
                     const hrefValue = this.getK9DataId(link.attr('href') as string);
                     if(hrefValue !== undefined){

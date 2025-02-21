@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { EpiDogATService} from "../serverApi/epiBackend";
 
 // Definiere den Typ für die API-Daten
@@ -6,8 +6,15 @@ export interface Dog {
   name: string;
   link: string;
 }
-
+declare global {
+  interface Window {
+      showDetails?: (element: HTMLElement) => void;
+  }
+}
 const CoiCalculator: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [clickedText, setClickedText] = useState<string>("");
+
   const [serverData, setServerData] = useState<Dog[]>([]); // Hier als leeres Array initialisieren
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -15,9 +22,24 @@ const CoiCalculator: React.FC = () => {
 
   const [dogPedigree, setPedigree] = useState<string | null>(null);
   const [detailsLoading, setDetailsLoading] = useState<boolean>(false);
-  const [dogId, setDogId] = useState<string>("")
+  const [dogId, setDogId] = useState<string>("");
+
+  const [dogEpiProgeny, setDogEpiProgeny] = useState<string[]| null>(null);
+  const [dogName, setDogName] = useState<string>("");
 
   useEffect(() => {
+
+    
+    window.showDetails = async function (element: HTMLElement) {
+      const dog = element.getAttribute("data-text");
+      const epiDogATService = new EpiDogATService();
+      if (dog) {
+        const offspring = epiDogATService.fetchEpiProgeny(dog)
+        setDogEpiProgeny(offspring ? offspring : []);
+        setDogName(dog)
+      }
+    };
+
     const fetchEpiDogData = async () => {
      
       try {
@@ -41,22 +63,24 @@ const CoiCalculator: React.FC = () => {
   }
 
     fetchEpiDogData();
+    return () => {
+      // Löscht die globale Funktion bei Unmount
+      window.showDetails = undefined;
+    };
   }, []);
 
   // Funktion zum Laden von Hundedetails
-  const fetchDogDetails = async (id: string) => {
+  const fetchDogPedigree = async (id: string) => {
     setDetailsLoading(true);
     setPedigree(null);
     try {
       const epiDogATService = new EpiDogATService()
       
       const response = await epiDogATService.fetchAT(id);
-      if (response === undefined || !response.ok) {
+      if (response === undefined) {
         throw new Error("Fehler beim Laden der Hundedetails");
       }
-      const data = await response.text();
-      console.debug("response data", data )
-      
+      const data = await response;
       setPedigree(data);
     } catch (err) {
       setError((err as Error).message);
@@ -73,9 +97,11 @@ const CoiCalculator: React.FC = () => {
       if(selectedDogName.split("=").length>0){
         id = selectedDogName.split("=")[1]
       }
-      fetchDogDetails(id);
+      fetchDogPedigree(id);
     }
   };
+   
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDogId(event.target.value);
   };
@@ -86,18 +112,77 @@ const CoiCalculator: React.FC = () => {
     }
     setError(null);
     console.log("dogId", dogId)
-    fetchDogDetails(dogId);
+    fetchDogPedigree(dogId);
   };
+ 
+  function handlePedigreeClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+
+    if (target.tagName === "A" && target.getAttribute("onclick") === "showDetails(this)") {
+        const text = target.getAttribute("data-text");
+        if (text) {
+            setClickedText(text)
+            console.log("Geklickt:", clickedText);
+        }
+    }
+  }
+
+
+  const container = containerRef.current;
+  if (container) {
+    container.addEventListener("click", handlePedigreeClick);
+  }
+
+  // return () => {
+ 
+  // };
   return (
-    <div>
-      
+    <div className="container-fluid">
+      <div className="row">
+      <div className="col" >
+      <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary">
+        <ul className="nav nav-pills flex-column mb-auto">
+          <li className="nav-item">
+          In der Ahnentafel sind die Hunde farblich hervorgehoben, die besonders häufig in den Stammbäumen von Hunden mit 
+          idiopathischer Epilepsie vorkommen. Die Intensität der Hervorhebung entspricht der Häufigkeit ihres Auftretens 
+          – je größer der Zahlenwert, desto häufiger sind sie in den Ahnentafeln vertreten.
+          </li>  
+          <hr></hr>
+          <li className="nav-item">
+            <h4>Legende</h4>
+              <ul>
+                <li>P = Eltern (1)</li>
+                <li>GP = Grosseltern (0,5) </li>
+                <li>GGP = UrGrosseltern (0,25)</li>
+                <li>...</li>
+              </ul>
+          </li>  
+          <li className="nav-item">
+            {dogEpiProgeny && (
+              
+              <div>
+                <hr></hr>
+                <h4>Nachkommen von {dogName}:</h4>
+                <ul>
+                  {dogEpiProgeny.map((item, index) => (
+                      <li key={index}>{item.trim()}</li>
+                  ))}
+              </ul>
+              </div>
+            )}
+          </li>    
+        </ul> 
+      </div>
+      </div>
+      <div className="col-10">
       {loading && <p>Lade Daten...</p>}
       {error && <p style={{ color: "red" }}>Fehler: {error}</p>}
 
       {!loading && !error && (
         <>
+        
         <div className="input-group">
-          <label htmlFor="dog-select">Wähle einen Hund:</label>
+          <label htmlFor="dog-select">Hund mit Epilepsie:</label>
           <select id="dog-select" value={selectedDog} onChange={handleChange} className="form-select">
                 <option value="">-- Bitte wählen --</option>
                 {serverData.map((dog, index) => (
@@ -124,11 +209,18 @@ const CoiCalculator: React.FC = () => {
           {dogPedigree && (
             <div  dangerouslySetInnerHTML={{ __html: dogPedigree }} >
             </div>
+            
           )}
+         
         </>
       )}
+      </div>
+      </div>
     </div>
-  );
+  )
+  //  => {
+  //   delete this.window.showDetails;
+  // };
 };
 
 export default CoiCalculator;

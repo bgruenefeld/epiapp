@@ -27,7 +27,7 @@ function App() {
       </div>
     </nav>
         {/* Seitenwechsel */}
-        <main className="container" style={{ paddingTop: "80px" }}>
+        <main className="container-fluid" style={{ paddingTop: "80px" }}>
           <Routes>
             <Route path="/" element={<Navigate to="/home" />} />
             <Route path="/home" element={<Home />} />

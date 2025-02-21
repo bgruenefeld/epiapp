@@ -33,7 +33,9 @@ const Episcorer: React.FC = () => {
     };
 
   return (
+    
     <div className="container">
+      
       <h4>Episcorer</h4>
       <button onClick={calculateRisk}>Stammbaum mit Risiko anzeigen</button>
       <div className="tree-container">
