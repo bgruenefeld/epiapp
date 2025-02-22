@@ -109,13 +109,14 @@ export class EpiDogATService {
 
                     const value = score
                     let lightness = "0"
-
+                    let lightnessDarkMode = 0
                     if(value !== undefined){
                       lightness = (100 - (value / 100) * 90).toFixed(0);
-                    }
-                      
-
-                    const linkHtml = "<a id="+index2+" style='cursor:pointer;font-size:bold;background-color: hsl(0, 100%, "+lightness+"%)'> ("+score+")</a>"
+                    
+                    lightnessDarkMode = 20 + (value / 100) * 40; // Lightness zwischen 20% und 60%
+                    //const backgroundColorDarkMode = `hsl(0, 50%, ${lightnessDarkMode}%)`;
+                  }
+                    const linkHtml = "<a id="+index2+" style='cursor:pointer;font-size:bold;background-color: hsl(0, 100%, "+lightnessDarkMode+"%)'> ("+score+")</a>"
                     const alink = cheerio.load(linkHtml)
                     const id = "#"+index2
                     const mylink = alink(id);
