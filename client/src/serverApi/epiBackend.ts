@@ -3,7 +3,7 @@ import { ScoreRepo } from "./scoreRepo";
 
  export class EpiDogATService {
     
-    private serverURL = "http://localhost:5000"//"https://epiapp-server.onrender.com";
+    private serverURL = "https://epiapp-server.onrender.com";//"http://localhost:5000"//
     private scoreRepo = ScoreRepo.getInstance();
 
     public async fetchData(): Promise<Response|undefined> {
