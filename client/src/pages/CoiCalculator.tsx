@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { EpiDogATService} from "../serverApi/epiBackend";
+import HilfetextModal from "./../components/helpModal";
 
 // Definiere den Typ für die API-Daten
 export interface Dog {
@@ -141,13 +142,8 @@ const CoiCalculator: React.FC = () => {
       <div className="row">
       <div className="col" >
       <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary">
-        <ul className="nav nav-pills flex-column mb-auto">
-          <li className="nav-item">
-          In der Ahnentafel sind die Hunde farblich hervorgehoben, die besonders häufig in den Stammbäumen von Hunden mit 
-          idiopathischer Epilepsie vorkommen. Die Intensität der Hervorhebung entspricht der Häufigkeit ihres Auftretens 
-          – je größer der Zahlenwert, desto häufiger sind sie in den Ahnentafeln vertreten.
-          </li>  
-          <hr></hr>
+        <ul className="nav nav-pills flex-column mb-auto">         
+          
           <li className="nav-item">
             <h4>Legende</h4>
               <ul>
@@ -191,7 +187,7 @@ const CoiCalculator: React.FC = () => {
                   </option>
                 ))}
           </select>
-         
+          <HilfetextModal></HilfetextModal>          
           <span className="input-group-text">Hunde-ID eingeben</span>
             <input
               id="dog-id-input"
