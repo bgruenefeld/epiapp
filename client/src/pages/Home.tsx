@@ -1,7 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Home: React.FC = () => {
+  
+  const [backendStatus, setData] = useState(null);
+  
+  useEffect(() => {
+    
+    const fetchBackend = async () => {
+      try {
+        const response = await fetch("https://epiapp-server.onrender.com/");
+        const result = await response.json();
+        setData(result.message);
+      } catch (error) {
+        console.error("Fehler beim Abrufen der Daten:", error);
+      }
+    };
+
+    // Direkt ausführen
+    fetchBackend();
+
+    // Alle 1 Minuten wiederholen 
+    const interval = setInterval(fetchBackend, 60000);
+
+    // Cleanup, um Speicherlecks zu vermeiden
+    return () => clearInterval(interval);
+  }, []);
   return (
           <div className="d-flex align-items-center vh-80">
  
@@ -48,7 +72,11 @@ const Home: React.FC = () => {
               <li className="icon-link"><Link to="/episcorer" className="icon-link">Coi Calculator</Link></li>
             </div>  
           </div>
+          <footer className="bg-dark text-black text-right py-3">
+            Backend Status: {backendStatus}
+          </footer> 
           </div>
+                   
         </div>
   );
 };

@@ -14,6 +14,8 @@ export class ScoreRepo{
    
     private constructor() {
         this.initScoreRepo();
+        setInterval(this.keepAlive, 600000);
+        this.keepAlive();
     }
 
     public static getInstance(): ScoreRepo {
@@ -36,7 +38,15 @@ export class ScoreRepo{
     private initScoreRepo():void {
         this.scoreRepo = this.readScoreFile(this.scoreFileName);
     }
-        
+    private async keepAlive() {
+        try {
+            const response = await fetch("https://epiapp-server.onrender.com");
+            const result = await response.json();
+            console.log("Frontend state:", result.message);
+        } catch (error) {
+            console.error("Fehler beim Abrufen der Daten:", error);
+        }
+    }
     private readScoreFile(filename: string): Map<string, Score> {
           // CSV-Datei einlesen
           // Erstellen einer Map: Key = Hundename, Value = { Score, EpiProgeny }
