@@ -17,12 +17,11 @@ const HilfetextModal: React.FC = () => {
           <Modal.Title>Erläuterung</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <p>In der Ahnentafel sind die Hunde farblich hervorgehoben, die in Stammbäumen von Hunden mit idiopathischer Epilepsie vorkommen. 
-            Je größer der Zahlenwert, desto häufiger sind sie in den Ahnentafeln vertreten.</p>
-            <p>Bei Click auf die Zahl hinter einem Hundenamen, werden im linken Seitenbereich Epi Nachkommen anzeigt in denen der ausgewählte Hund in der Ahnentafel vorkommt.</p>
-            <p>Im Eingabefeld <b>Hunde ID</b> kann eine ID einer <b>K9data Ahnentafel</b> eingegeben werde:</p>
-                <img src="./k9data-help.png" width="75%"></img>
-            <p>Click auf <b>Hund suchen</b> lädt die Ahnentafel und sie wird mit den zur Verfügung stehenden Epi Scores angezeigt.</p>
+            <p>In der Ahnentafel sind Hunde farblich markiert, die in Stammbäumen von Hunden mit idiopathischer Epilepsie vorkommen. Je höher der Zahlenwert, desto häufiger sind sie in den Ahnentafeln vertreten.</p>
+            <p>Ein Klick auf die Zahl hinter einem Hundenamen zeigt im linken Seitenbereich die Nachkommen mit Epilepsie an, in deren Ahnentafel der ausgewählte Hund vorkommt.</p>
+            <p>Im Eingabefeld <b>Hunde-ID</b> kann eine K9data-Ahnentafel-ID eingegeben werden.</p>
+            <img src="./k9data-help.png" width="75%"></img>
+            <p>Ein Klick auf <b>Hund suchen</b> lädt die entsprechende Ahnentafel und zeigt sie mit den verfügbaren Epi-Scores an.</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShow(false)}>

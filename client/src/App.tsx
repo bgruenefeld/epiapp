@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-ro
 import Episcorer from "./pages/Episcorer";
 import CoiCalculator from "./pages/CoiCalculator";
 import Home from "./pages/Home";
+import HilfetextModal from './components/helpModal';
 function App() {
   
   return (
@@ -21,7 +22,10 @@ function App() {
           <ul className="navbar-nav me-auto mb-2 mb-md-0">
             <li className="nav-item nav-link"><Link to="/home" className="nav-item nav-link">Home</Link></li>
             <li className="nav-item nav-link"><Link to="/episcorer" className="nav-item nav-link">Coi Calculator</Link></li>
-            <li className="nav-item nav-link"><Link to="/coi-calculator" className="nav-item nav-link">Episcorer</Link></li>
+            <li className="nav-item nav-link"><Link to="/coi-calculator" className="nav-item nav-link">Episcorer</Link></li>   
+          </ul>
+          <ul className="navbar-nav ms-auto">
+            <li className="nav-item"><HilfetextModal /></li>
           </ul>
         </div>
       </div>

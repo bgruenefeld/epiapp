@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { EpiDogATService} from "../serverApi/epiBackend";
-import HilfetextModal from "./../components/helpModal";
 
 // Definiere den Typ für die API-Daten
 export interface Dog {
@@ -93,6 +92,9 @@ const CoiCalculator: React.FC = () => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedDogName = event.target.value;
     setSelectedDog(selectedDogName);
+    setClickedText("");
+    setDogEpiProgeny(null)
+
     if (selectedDogName) {
       let id = ""
       if(selectedDogName.split("=").length>0){
@@ -187,7 +189,7 @@ const CoiCalculator: React.FC = () => {
                   </option>
                 ))}
           </select>
-          <HilfetextModal></HilfetextModal>          
+                   
           <span className="input-group-text">Hunde-ID eingeben</span>
             <input
               id="dog-id-input"
