@@ -17,15 +17,16 @@ const Home: React.FC = () => {
           die den Zuchtprozess intelligenter, effizienter und transparenter gestalten.
           </p>
           <p>
-            <h4>Was BreedOptimizer Züchtern bietet:</h4>
+            <h4>Was BreedOptimizer Züchtern bieten wird:</h4>
             <ul>
               <li>Diversitätsanalyse zur Vermeidung von Inzucht und genetischen Engpässen</li>
               <li>Optimierte Zuchtplanung mit datenbasierten Empfehlungen für die beste Verpaarung</li>
               <li>Detaillierte Abstammungsanalysen zur besseren Einschätzung von Gesundheits- und Leistungspotenzial</li>
               <li>Werkzeuge für eine langfristig stabile Zuchtstrategie</li>
             </ul>
-            Unser Ziel ist es, Züchter mit Werkzeugen zu unterstützen, 
-            damit sie die Zukunft der Labrador-Zucht aktiv und nachhaltig gestalten können.
+            BreedOptimizer wird kontinuierlich weiterentwickelt, und neue Funktionen werden schrittweise integriert.
+            Nicht alle geplanten Tools sind aktuell verfügbar, aber unser Ziel ist es, eine umfassende und leistungsfähige Plattform bereitzustellen,
+            damit Züchter die Zukunft der Labrador-Zucht aktiv und nachhaltig gestalten können.
             <hr></hr>
             {/* <b>🔗 BreedOptimizer – Weil verantwortungsvolle Zucht Planung erfordert.</b>  */}
           </p>
