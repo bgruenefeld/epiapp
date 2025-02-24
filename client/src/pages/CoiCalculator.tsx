@@ -182,21 +182,22 @@ const CoiCalculator: React.FC = () => {
         <div className="input-group">
           <label htmlFor="dog-select">Hund mit Epilepsie:</label>
           <select id="dog-select" value={selectedDog} onChange={handleChange} className="form-select">
-                <option value="">-- Bitte wählen --</option>
+                <option value="">-- auswählen --</option>
                 {serverData.map((dog, index) => (
                   <option key={index} value={dog.link}>
                     {dog.name}
                   </option>
                 ))}
           </select>
-                   
-          <span className="input-group-text">Hunde-ID eingeben</span>
+          <label>ODER</label>
+          <span className="input-group-text">ID eingeben</span>
             <input
               id="dog-id-input"
               type="text"
               value={dogId}
               onChange={handleInputChange}
               className="form-control"
+              placeholder="k9Data ID"
             />
             <button onClick={handleFetchById}>Hund suchen</button>
           </div>
