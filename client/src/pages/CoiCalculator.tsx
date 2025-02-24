@@ -189,7 +189,7 @@ const CoiCalculator: React.FC = () => {
                   </option>
                 ))}
           </select>
-          <label>ODER</label>
+          <label>... ODER: ...</label>
           <span className="input-group-text">ID eingeben</span>
             <input
               id="dog-id-input"

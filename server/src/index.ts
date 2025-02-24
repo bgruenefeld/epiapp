@@ -1,11 +1,14 @@
-import express from "express";
+import express, {Request, Response, NextFunction
+} from "express";
 import cors from "cors";
 import * as https from 'https';
 
 import dotenv from "dotenv";
 import { EpiDogATService } from "./repositories/epiDogs";
 
-import * as cheerio from "cheerio";
+interface AuthenticatedRequest extends Request {
+  user?: { id: string; name?: string }; // Je nach Struktur deines Users anpassen
+}
 
 dotenv.config();
 
@@ -18,6 +21,13 @@ const agent = new https.Agent({
 // Middleware
 app.use(cors({ origin: "*" }));
 app.use(express.json());
+
+app.use((req: AuthenticatedRequest, _res: Response, next) => {
+  const userId = req.user ? req.user.id : "anonymous"; // Beispiel für Authentifizierung
+  console.log(`User: ${userId}, IP: ${req.ip}, URL: ${req.originalUrl}`);
+  next(); // WICHTIG: Damit Express mit der Verarbeitung weitermacht!
+});
+
 
 // Test-Route
 app.get("/", (req, res) => {

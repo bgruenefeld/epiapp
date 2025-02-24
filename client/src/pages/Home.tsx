@@ -37,7 +37,7 @@ const Home: React.FC = () => {
           </p>
           <p>
             Mit BreedOptimizer bieten wir eine datengetriebene Plattform, die Züchtern hilft, nachhaltige und fundierte Zuchtentscheidungen zu treffen. 
-          Basierend auf frei verfügbaren Datenquellen wie <a href="https://www.k9data.com/default.asp">K9data.com</a>, <a href="https://saritaslabrador.blogspot.com/p/epilepsi.html">Saritas Blog</a>, <a href="https://www.oakmore.de/epilepsie-beim-labrador-liste">Oakmore</a> und anderen Hundedatenbanken entwickeln wir Analysetools, 
+          Basierend auf frei verfügbaren Datenquellen wie <a href="https://www.k9data.com/default.asp" target="_blank">K9data.com</a>, <a href="https://saritaslabrador.blogspot.com/p/epilepsi.html" target="_blank">Saritas Blog</a>, <a href="https://www.oakmore.de/epilepsie-beim-labrador-liste" target="_blank">Oakmore</a> und anderen Hundedatenbanken entwickeln wir Analysetools, 
           die den Zuchtprozess intelligenter, effizienter und transparenter gestalten.
           </p>
           <p>

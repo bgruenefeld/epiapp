@@ -4,7 +4,7 @@ import { ScoreRepo } from "./scoreRepo";
 
  export class EpiDogATService {
     
-    private serverURL = API_URL //"https://epiapp-server.onrender.com";//"http://localhost:5000"//
+    private serverURL = API_URL;
     private scoreRepo = ScoreRepo.getInstance();
 
     public async fetchData(): Promise<Response|undefined> {
