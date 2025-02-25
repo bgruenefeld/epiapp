@@ -1,5 +1,6 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 import logo from "/Breedoptimizer.webp"; 
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
 import Episcorer from "./pages/Episcorer";

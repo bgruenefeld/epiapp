@@ -178,29 +178,75 @@ const CoiCalculator: React.FC = () => {
 
       {!loading && !error && (
         <>
-        
-        <div className="input-group">
-          <label htmlFor="dog-select">Hund mit Epilepsie:</label>
-          <select id="dog-select" value={selectedDog} onChange={handleChange} className="form-select">
-                <option value="">-- auswählen --</option>
-                {serverData.map((dog, index) => (
-                  <option key={index} value={dog.link}>
-                    {dog.name}
-                  </option>
-                ))}
-          </select>
-          <label>... ODER: ...</label>
-          <span className="input-group-text">ID eingeben</span>
-            <input
-              id="dog-id-input"
-              type="text"
-              value={dogId}
-              onChange={handleInputChange}
-              className="form-control"
-              placeholder="k9Data ID"
-            />
-            <button onClick={handleFetchById}>Hund suchen</button>
+        <div className="row row-cols-lg-auto g-3 align-items-center">
+          <div className="col-12">                      
+              <input
+                id="dog-id-input"
+                type="text"
+                value={dogId}                
+                onChange={handleInputChange}
+                className="form-control"
+                placeholder="k9Data ID"
+              />            
           </div>
+
+          <div className="col-12">
+            <div className="form-check">
+              <input className="form-check-input" type="checkbox" id="inlineFormCheck"></input>
+              <label className="form-check-label" htmlFor="inlineFormCheck">
+                vertikale Ahnentafel
+              </label>
+            </div>
+          </div>
+
+          <div className="col-12">          
+            <button onClick={handleFetchById} className="btn btn-primary">Hund suchen</button>
+          </div>
+
+          <div className="col-12">        
+            <select id="dog-select" value={selectedDog} onChange={handleChange} className="form-select">
+                  <option value="">-- Erkrankte Hunde auswählen --</option>
+                  {serverData.map((dog, index) => (
+                    <option key={index} value={dog.link}>
+                      {dog.name}
+                    </option>
+                  ))}
+            </select>
+          </div>
+
+        </div>
+          {/* <div className="input-group">
+            <label htmlFor="dog-select">Hund mit Epilepsie:</label>
+            <select id="dog-select" value={selectedDog} onChange={handleChange} className="form-select">
+                  <option value="">-- auswählen --</option>
+                  {serverData.map((dog, index) => (
+                    <option key={index} value={dog.link}>
+                      {dog.name}
+                    </option>
+                  ))}
+            </select>
+            <label>... ODER: ...</label>
+            <span className="input-group-text">ID eingeben</span>
+              <input
+                id="dog-id-input"
+                type="text"
+                value={dogId}
+                onChange={handleInputChange}
+                className="form-control"
+                placeholder="k9Data ID"
+              />
+              <button onClick={handleFetchById} className="btn btn-secondary">AT anzeigen</button>
+              
+              <input
+                id="dog-search-input"
+                type="text"
+                value={dogId}
+                onChange={handleInputChange}
+                className="form-control"
+                placeholder="Hunde in Epi Ahnentafeln suchen."
+              />
+              <button onClick={handleFetchById} className="btn btn-secondary">Hund suchen</button>
+          </div> */}
           {/* Ladeanzeige für Details */}
           {detailsLoading && <p>Ahnentafel wird geladen...</p>}
 
