@@ -1,6 +1,7 @@
 a {
   color: white !important; /* Standardfarbe für Links */
   text-decoration: none !important; /* Falls du die Unterstreichung entfernen möchtest */
+  font-size: larger;
 }
 
 a:visited {
