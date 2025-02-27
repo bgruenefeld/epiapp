@@ -108,15 +108,16 @@ export class EpiDogATService {
                     }
 
                     const value = score
-                    let lightness = "0"
-                    let lightnessDarkMode = 0
+                    let lightness;
+
                     if(value !== undefined){
-                      lightness = (100 - (value / 100) * 90).toFixed(0);
+                      lightness = this.mapValueToColor(value);                                          
+                    }                    
                     
-                    lightnessDarkMode = 20 + (value / 100) * 40; // Lightness zwischen 20% und 60%
-                    //const backgroundColorDarkMode = `hsl(0, 50%, ${lightnessDarkMode}%)`;
-                  }
-                    const linkHtml = "<a id="+index2+" style='cursor:pointer;font-size:bold;background-color: hsl(0, 100%, "+lightnessDarkMode+"%)'> ("+score+")</a>"
+                    console.log("value", value)
+                    console.log("lightness", lightness)
+
+                    const linkHtml = "<a id="+index2+" style='color:"+lightness?.textColor+ "!important ;cursor:pointer;font-size:bold;background-color: "+lightness?.bgColor+"'> ("+score+")</a>"
                     const alink = cheerio.load(linkHtml)
                     const id = "#"+index2
                     const mylink = alink(id);
@@ -148,6 +149,42 @@ export class EpiDogATService {
         return result
 
       }
+      private mapValueToColor(value: number, minVal: number = 0.0625, maxVal: number = 10): { bgColor: string; textColor: string } {
+        const lightMin = 20; // Dunkelste Lightness
+        const lightMax = 90; // Hellste Lightness
+    
+        // Skalierung des Wertes auf den Bereich 1-10
+        let mappedValue = 1 + ((value - minVal) / (maxVal - minVal)) * 9;
+        mappedValue = Math.max(1, Math.min(10, Math.round(mappedValue))); // Begrenzung auf 1-10
+    
+        // Berechnung der Lightness
+        const normalized = (mappedValue - 1) / (10 - 1);
+        const inverted = 1 - normalized;
+        const lightness = inverted * (lightMax - lightMin) + lightMin;
+    
+        // Farbzuweisung nach Stufen
+        let hue: number;
+        let textColor: string;
+        if (mappedValue >= 1 && mappedValue <= 3) {
+            hue = 30; // Orange
+            textColor = "black"; // Für helles Orange bessere Lesbarkeit
+        } else if (mappedValue >= 4 && mappedValue <= 7) {
+            hue = 0; // Rot
+            textColor = "white"; // Für Rot bessere Lesbarkeit
+        } else if (mappedValue >= 8 && mappedValue <= 10) {
+            hue = 280; // Violett
+            textColor = "white"; // Für dunkles Violett bessere Lesbarkeit
+        } else {
+            hue = 0; // Standardfallback (Rot)
+            textColor = "white";
+        }
+    
+        return {
+            bgColor: `hsl(${hue}, 100%, ${lightness}%)`,
+            textColor: textColor
+        };
+    }
+
       private getK9DataId(link:string):string|undefined {
         if(link.includes("k9data.com")){
           return link.split("=")[1];
