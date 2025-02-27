@@ -38,7 +38,7 @@ export class ScoreRepo{
         
     private async readScoreFile(filename: string): Promise<Map<string, Score>> {
         
-        const response = await fetch("./"+filename); // Stelle sicher, dass die Datei im `public/`-Ordner liegt
+        const response = await fetch("./epiapp/"+filename); // Stelle sicher, dass die Datei im `public/`-Ordner liegt
         const csvData = await response.text();
         const dogMap = new Map<string, { Score: number; EpiProgeny: string[] }>();
 
