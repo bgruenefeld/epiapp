@@ -76,12 +76,30 @@ export class ScoreRepo{
         
             records.forEach(record => {
             const name = record.Hundename.trim();
-            const score = parseFloat(record.Score);
+            const score = parseFloat(record.Score)/213;
             const epiProgeny = record.EpiProgeny.split(",");
         
             dogMap.set(name, { Score: score, EpiProgeny: epiProgeny });
         });
-    
+        // Schritt 1: Min- und Max-Wert aus der Map extrahieren
+        const scores = Array.from(dogMap.values()).map(dog => dog.Score);
+        const minScore = Math.min(...scores);
+        const maxScore = Math.max(...scores);
+
+        console.log(`Min Score: ${minScore}, Max Score: ${maxScore}`);
+
+        // Schritt 2: Min-Max-Normalisierung durchführen und speichern
+        dogMap.forEach((dog, name) => {
+            const normalizedScore = (maxScore !== minScore) 
+                ? (dog.Score - minScore) / (maxScore - minScore) 
+                : 0; // Falls alle Werte gleich sind, setze alles auf 0
+
+            // Speichere den normalisierten Wert zurück in die Map
+            dogMap.set(name, { 
+                Score: parseFloat(normalizedScore.toFixed(3)), 
+                EpiProgeny: dog.EpiProgeny 
+            });
+        });
         // Ausgabe der Map zur Kontrolle
         console.log("dogMap successfully created:",dogMap.size);
         });

@@ -149,7 +149,7 @@ export class EpiDogATService {
         return result
 
       }
-      private mapValueToColor(value: number, minVal: number = 0.0625, maxVal: number = 10): { bgColor: string; textColor: string } {
+      private mapValueToColor(value: number, minVal: number = 0.0, maxVal: number = 1): { bgColor: string; textColor: string } {
         const lightMin = 20; // Dunkelste Lightness
         const lightMax = 90; // Hellste Lightness
     
@@ -159,19 +159,19 @@ export class EpiDogATService {
     
         // Berechnung der Lightness
         const normalized = (mappedValue - 1) / (10 - 1);
-        const inverted = 1 - normalized;
+        const inverted = 1 - value;
         const lightness = inverted * (lightMax - lightMin) + lightMin;
-    
+        mappedValue = value;
         // Farbzuweisung nach Stufen
         let hue: number;
         let textColor: string;
-        if (mappedValue >= 1 && mappedValue <= 3) {
+        if (mappedValue >= 0 && mappedValue <= 0.3) {
             hue = 30; // Orange
             textColor = "black"; // Für helles Orange bessere Lesbarkeit
-        } else if (mappedValue >= 4 && mappedValue <= 7) {
+        } else if (mappedValue > 0.3 && mappedValue <= 0.7) {
             hue = 0; // Rot
             textColor = "white"; // Für Rot bessere Lesbarkeit
-        } else if (mappedValue >= 8 && mappedValue <= 10) {
+        } else if (mappedValue > 0.7 && mappedValue <= 1) {
             hue = 280; // Violett
             textColor = "white"; // Für dunkles Violett bessere Lesbarkeit
         } else {
