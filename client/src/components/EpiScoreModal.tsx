@@ -3,14 +3,14 @@ import { Modal, Button } from "react-bootstrap";
 
 import { MathJax, MathJaxContext } from "better-react-mathjax";
 
-const HilfetextModal: React.FC = () => {
+const EpiScoreModal: React.FC = () => {
   const [show, setShow] = useState<boolean>(false);
 
   return (
     <>
       {/* Button zum Öffnen des Modals */}
-      <Button variant="primary" onClick={() => setShow(true)}>
-        Hilfe anzeigen
+      <Button variant="secondary" onClick={() => setShow(true)}>
+        Definition EpiScore
       </Button>
 
       {/* Das Modal */}
@@ -18,15 +18,10 @@ const HilfetextModal: React.FC = () => {
         <Modal.Header closeButton>
           <Modal.Title>Erläuterung</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-            <p>In der Ahnentafel sind Hunde farblich markiert, die in Stammbäumen von Hunden mit idiopathischer Epilepsie vorkommen. Je höher der Zahlenwert, desto häufiger sind sie in den Ahnentafeln vertreten.</p>
-            <p>Ein Klick auf die Zahl hinter einem Hundenamen zeigt im linken Seitenbereich die Nachkommen mit Epilepsie an, in deren Ahnentafel der ausgewählte Hund vorkommt.</p>
-            <p>Im Eingabefeld <b>Hunde-ID</b> kann eine K9data-Ahnentafel-ID eingegeben werden. Dabei kann es sich natürlich auch um eine <b>Testverpaarung</b> handeln.</p>
-            <img src="./epiapp/k9data-help.png" width="75%"></img>
-            <p>Ein Klick auf <b>Hund suchen</b> lädt die entsprechende Ahnentafel und zeigt sie mit den verfügbaren Epi-Scores an.</p>
+        <Modal.Body>            
             <MathJaxContext>
             <div style={{ maxWidth: "800px", margin: "auto", fontFamily: "Arial, sans-serif", lineHeight: "1.6" }}>
-                <h4>Algorithmus zur Berechnung der Epilepsie-Belastung bei Hunden</h4>
+                <h3>Algorithmus zur Berechnung der Epilepsie-Belastung bei Hunden</h3>
                 <p>
                 Um die genetische Belastung eines Hundes hinsichtlich Epilepsie zu bestimmen, wird ein Algorithmus angewendet, 
                 der auf den Ahnentafeln von Epilepsie-Hunden basiert. Dabei wird zunächst für jeden Hund erfasst, 
@@ -105,4 +100,4 @@ const HilfetextModal: React.FC = () => {
   );
 };
 
-export default HilfetextModal;
+export default EpiScoreModal;

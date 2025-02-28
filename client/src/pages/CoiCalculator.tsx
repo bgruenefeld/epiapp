@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { EpiDogATService} from "../serverApi/epiBackend";
-
+import EpiScoreModal from "../components/EpiScoreModal"
 // Definiere den Typ für die API-Daten
 export interface Dog {
   name: string;
@@ -212,6 +212,9 @@ const CoiCalculator: React.FC = () => {
                     </option>
                   ))}
             </select>
+          </div>
+          <div className="col-12">
+          <EpiScoreModal />
           </div>
 
         </div>
