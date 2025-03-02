@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { EpiDogATService} from "../serverApi/epiBackend";
 import EpiScoreModal from "../components/EpiScoreModal"
+import EpiScoreBox from "../components/EpiScoreBox";
+import { Dog } from "../models/models";
 // Definiere den Typ für die API-Daten
-export interface Dog {
-  name: string;
-  link: string;
-}
+
 declare global {
   interface Window {
       showDetails?: (element: HTMLElement) => void;
@@ -26,6 +25,7 @@ const CoiCalculator: React.FC = () => {
 
   const [dogEpiProgeny, setDogEpiProgeny] = useState<string[]| null>(null);
   const [dogName, setDogName] = useState<string>("");
+  const [dog,setDog] = useState<Dog|null>()
 
   useEffect(() => {
 
@@ -73,6 +73,8 @@ const CoiCalculator: React.FC = () => {
   const fetchDogPedigree = async (id: string) => {
     setDetailsLoading(true);
     setPedigree(null);
+    setDog(null);
+
     try {
       const epiDogATService = new EpiDogATService()
       
@@ -81,7 +83,8 @@ const CoiCalculator: React.FC = () => {
         throw new Error("Fehler beim Laden der Hundedetails");
       }
       const data = await response;
-      setPedigree(data);
+      setPedigree(data.pedigree);
+      setDog(data.dog)
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -214,50 +217,30 @@ const CoiCalculator: React.FC = () => {
             </select>
           </div>
           <div className="col-12">
-          <EpiScoreModal />
+          <EpiScoreModal />          
+          </div>
+          <div className="col-12">          
+          <EpiScoreBox/> 
           </div>
 
         </div>
-          {/* <div className="input-group">
-            <label htmlFor="dog-select">Hund mit Epilepsie:</label>
-            <select id="dog-select" value={selectedDog} onChange={handleChange} className="form-select">
-                  <option value="">-- auswählen --</option>
-                  {serverData.map((dog, index) => (
-                    <option key={index} value={dog.link}>
-                      {dog.name}
-                    </option>
-                  ))}
-            </select>
-            <label>... ODER: ...</label>
-            <span className="input-group-text">ID eingeben</span>
-              <input
-                id="dog-id-input"
-                type="text"
-                value={dogId}
-                onChange={handleInputChange}
-                className="form-control"
-                placeholder="k9Data ID"
-              />
-              <button onClick={handleFetchById} className="btn btn-secondary">AT anzeigen</button>
-              
-              <input
-                id="dog-search-input"
-                type="text"
-                value={dogId}
-                onChange={handleInputChange}
-                className="form-control"
-                placeholder="Hunde in Epi Ahnentafeln suchen."
-              />
-              <button onClick={handleFetchById} className="btn btn-secondary">Hund suchen</button>
-          </div> */}
+          
           {/* Ladeanzeige für Details */}
           {detailsLoading && <p>Ahnentafel wird geladen...</p>}
 
           {/* Hundedetails anzeigen */}
-          {dogPedigree && (
-            <div  dangerouslySetInnerHTML={{ __html: dogPedigree }} >
+          {dog && (
+            <div>
+              <div>AVG:{dog.avg} %</div>
+              <div>COI:{dog.coi} %</div>
+              <div>                
+                               
             </div>
-            
+
+            </div>
+          )}
+          {dogPedigree && (
+            <div  dangerouslySetInnerHTML={{ __html: dogPedigree }} ></div>
           )}
          
         </>

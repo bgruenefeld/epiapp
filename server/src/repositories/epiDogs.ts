@@ -4,14 +4,19 @@ import https from "https";
 
 import * as cheerio from "cheerio";
 
-import Papa from 'papaparse';
 import { ScoreRepo } from './scoreRepo';
+import { CoiCalculator } from '../services/coiCalculator';
 
 export interface Dog{
     name:string,
-    link:string
-  }
-
+    link:string,
+    coi?:number,
+    avg?:number
+}
+export interface PedigreeResult{
+  pedigree:string,
+  dog:Dog
+}
 export class EpiDogATService {
       private scoreRepo:ScoreRepo = ScoreRepo.getInstance()
 
@@ -37,38 +42,34 @@ export class EpiDogATService {
         return epiDogs
       }
 
-      public async getAT(k9DogID: string, verticalPedigree?: boolean): Promise<string | null> {
+      public async getAT(k9DogID: string, verticalPedigree?: boolean): Promise<PedigreeResult | null> {
         try {
-          
-          //const httpsAgent = new https.Agent({ rejectUnauthorized: false });
-          const agent = new https.Agent({
-            rejectUnauthorized: false
-          });
-          
+          const agent = new https.Agent({ rejectUnauthorized: false });
           const url = verticalPedigree
             ? `https://www.k9data.com/verticalpedigree.asp?ID=${k9DogID}`
             : `https://www.k9data.com/fivegen.asp?ID=${k9DogID}`;
-      
-          
+    
           return new Promise((resolve, reject) => {
             https.get(url, { agent }, (res) => {
-                let data = "";
+              let data = "";
     
-                res.on("data", (chunk) => {
-                    data += chunk; // Daten sammeln
-                });
+              res.on("data", (chunk) => {
+                data += chunk; // HTML-Daten sammeln
+              });
     
-                res.on("end", () => {
-                    resolve(data); // Daten an den Aufrufer weitergeben
-                });
+              res.on("end", () => {
+                debugger
+                const dogInfo = this.extractDogInfo(data, url);
+                if (!dogInfo) {
+                  reject(new Error("Fehler beim Extrahieren der Hundedaten"));
+                  return;
+                }
+                resolve({ pedigree: data, dog: dogInfo });
+              });
     
-                res.on("error", (err) => {
-                    reject(err); // Fehler weitergeben
-                });
-            }).on("error", (err) => {
-                reject(err); // Fehler weitergeben
-            });
-        });
+              res.on("error", (err) => reject(err));
+            }).on("error", (err) => reject(err));
+          });
         } catch (error) {
           console.error("Fehler beim Abrufen der Daten von k9data.com:", error);
           return null;
@@ -84,13 +85,13 @@ export class EpiDogATService {
         return []
       }
 
-      public async getATWithEpiScores(html:string):Promise<string>{
+      public async getATWithEpiScores(html:PedigreeResult):Promise<PedigreeResult|undefined>{
         if(this.scoreRepo === undefined){
-          return "";
+          return undefined;
         }
         let result ="";
 
-        const data = cheerio.load(html);
+        const data = cheerio.load(html.pedigree);
         const mainDog = "#result > font";
         console.log("getATWithEpiScores getAllScoredDogs")
         this.scoreRepo.getAllScoredDogs().forEach(dog => {
@@ -145,9 +146,22 @@ export class EpiDogATService {
         
         const newData = data("table[width='100%']").eq(1);
         result = newData.html() as string;
+        const calculator = new CoiCalculator();
+        const pedigree : Dog[][] = calculator.extractData(html.pedigree)
+        const coi = calculator.calculateWrightCOI(pedigree); //calculator.calculateCOI(pedigree);
+        const avg = calculator.calculateAVK(pedigree);
+        return {pedigree:result, dog:{name:"", link:"", avg:avg, coi:coi}}
 
-        return result
-
+      }
+      private extractDogInfo(html: string, url: string): Dog | null {
+       
+    
+        return {
+          name: "hasso",
+          link: "url",
+          coi: 23,
+          avg: 12,
+        };
       }
       private mapValueToColor(value: number, minVal: number = 0.0, maxVal: number = 1): { bgColor: string; textColor: string } {
         const lightMin = 20; // Dunkelste Lightness

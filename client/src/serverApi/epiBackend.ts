@@ -1,3 +1,4 @@
+import { PedigreeResult } from "../models/models";
 import API_URL from "./apiUrl";
 import { ScoreRepo } from "./scoreRepo";
 
@@ -14,17 +15,18 @@ import { ScoreRepo } from "./scoreRepo";
             console.error("Fehler beim Abrufen der Daten:", error);
         }
     }
-    public async fetchAT(id:string):Promise<string|undefined>{
-        let data = "";
+    public async fetchAT(id:string):Promise<PedigreeResult|undefined>{
+        //let data:PedigreeResult = "";
         try {
             // const id = link.split("=")[1]
             const response = await fetch(this.serverURL+"/api/at/"+id); // Dank Proxy braucht man keine localhost:5000 URL 
             if (response === undefined || !response.ok) {
                 throw new Error("Fehler beim Laden der Hundedetails");
               }
-            data = await response.text();
+            const data = await response.json() as PedigreeResult;
             console.debug("response data", data )
-            return data
+
+            return {pedigree:data.pedigree, dog:data.dog}
         } catch (error) {
             console.error("Fehler beim Abrufen der Daten:", error);
         }
