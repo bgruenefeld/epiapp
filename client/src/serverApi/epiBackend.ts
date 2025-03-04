@@ -10,16 +10,16 @@ import { ScoreRepo } from "./scoreRepo";
 
     public async fetchData(): Promise<Response|undefined> {
         try {
-            return await fetch(this.serverURL+"/api/data"); // Dank Proxy braucht man keine localhost:5000 URL
+            return await fetch(this.serverURL+"/api/data"); 
         } catch (error) {
             console.error("Fehler beim Abrufen der Daten:", error);
         }
     }
-    public async fetchAT(id:string):Promise<PedigreeResult|undefined>{
+    public async fetchAT(id:string,vertical:boolean):Promise<PedigreeResult|undefined>{
         //let data:PedigreeResult = "";
         try {
             // const id = link.split("=")[1]
-            const response = await fetch(this.serverURL+"/api/at/"+id); // Dank Proxy braucht man keine localhost:5000 URL 
+            const response = await fetch(this.serverURL+"/api/at/"+id+"/"+vertical);
             if (response === undefined || !response.ok) {
                 throw new Error("Fehler beim Laden der Hundedetails");
               }

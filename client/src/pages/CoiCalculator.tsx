@@ -26,6 +26,7 @@ const CoiCalculator: React.FC = () => {
   const [dogEpiProgeny, setDogEpiProgeny] = useState<string[]| null>(null);
   const [dogName, setDogName] = useState<string>("");
   const [dog,setDog] = useState<Dog|null>()
+  const [vertical,setVertical] = useState(false);
 
   useEffect(() => {
 
@@ -70,7 +71,7 @@ const CoiCalculator: React.FC = () => {
   }, []);
 
   // Funktion zum Laden von Hundedetails
-  const fetchDogPedigree = async (id: string) => {
+  const fetchDogPedigree = async (id: string, vertical:boolean) => {
     setDetailsLoading(true);
     setPedigree(null);
     setDog(null);
@@ -78,7 +79,7 @@ const CoiCalculator: React.FC = () => {
     try {
       const epiDogATService = new EpiDogATService()
       
-      const response = await epiDogATService.fetchAT(id);
+      const response = await epiDogATService.fetchAT(id,vertical);
       if (response === undefined) {
         throw new Error("Fehler beim Laden der Hundedetails");
       }
@@ -103,10 +104,17 @@ const CoiCalculator: React.FC = () => {
       if(selectedDogName.split("=").length>0){
         id = selectedDogName.split("=")[1]
       }
-      fetchDogPedigree(id);
+      
+      fetchDogPedigree(id,vertical);
     }
   };
    
+  const handleVertical =  (event: React.ChangeEvent<HTMLInputElement>) => {
+    
+    console.log("handle vertical:", event.target.checked);
+    setVertical(event.target.checked);
+
+  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDogId(event.target.value);
@@ -116,9 +124,12 @@ const CoiCalculator: React.FC = () => {
       setError("Bitte geben Sie eine Hunde-ID ein");
       return;
     }
+    
     setError(null);
     console.log("dogId", dogId)
-    fetchDogPedigree(dogId);
+    
+
+    fetchDogPedigree(dogId,vertical);
   };
  
   function handlePedigreeClick(event: MouseEvent) {
@@ -139,9 +150,6 @@ const CoiCalculator: React.FC = () => {
     container.addEventListener("click", handlePedigreeClick);
   }
 
-  // return () => {
- 
-  // };
   return (
     <div className="container-fluid">
       <div className="row">
@@ -195,7 +203,7 @@ const CoiCalculator: React.FC = () => {
 
           <div className="col-12">
             <div className="form-check">
-              <input className="form-check-input" type="checkbox" id="inlineFormCheck"></input>
+              <input className="form-check-input" type="checkbox" id="inlineFormCheck" onChange={handleVertical} checked={vertical}></input>
               <label className="form-check-label" htmlFor="inlineFormCheck">
                 vertikale Ahnentafel
               </label>

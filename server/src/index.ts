@@ -51,10 +51,19 @@ app.get("/api/epiprogeny/:dogName", (req, res) => {
   res.json({ dogs });
 });
 
-app.get("/api/at/:id", async (req, res) => {
+app.get("/api/at/:id/:verticalPedigree?", async (req, res) => {
   const k9DogID = req.params.id;
-  const service = new EpiDogATService()
-  let response = await service.getAT(k9DogID,false)
+  console.log("req.params.verticalPedigree: ",  req.params.verticalPedigree);
+  let verticalPedigree = false;
+  if(req.params.verticalPedigree !== undefined && req.params.verticalPedigree === "true"){
+    verticalPedigree = true
+  }
+ 
+  console.log("verticalPedigree", verticalPedigree);
+
+  const service = new EpiDogATService();
+
+  let response = await service.getAT(k9DogID,verticalPedigree);
   
   if (response === null || !response) {
     console.error("Fehler: API-Antwort ist leer oder ungültig");
