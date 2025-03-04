@@ -11,7 +11,7 @@ function App() {
   
   return (
     <>
-    <Router>
+    <Router basename="/epiapp">
     <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <div className="container-fluid">
       <img src={logo} alt="BreedOptimizer Logo" className="bi me-2" width="40" height="32" />
@@ -33,12 +33,14 @@ function App() {
     </nav>
         {/* Seitenwechsel */}
         <main className="container-fluid" style={{ paddingTop: "80px" }}>
+        
           <Routes>
             <Route path="/" element={<Navigate to="/home" />} />
             <Route path="/home" element={<Home />} />
             <Route path="/episcorer" element={<Episcorer />} />
             <Route path="/coi-calculator" element={<CoiCalculator />} />
           </Routes>
+           
         </main>
       
     </Router>
