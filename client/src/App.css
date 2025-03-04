@@ -15,3 +15,6 @@ a:hover {
 a:active {
   color: darkgray !important; /* Farbe beim Klicken */
 }
+#root > main > div > div > div.col-10 > div:nth-child(3) > font {
+  font-size: 20px; /* Oder eine gewünschte Größe */
+}
