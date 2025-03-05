@@ -4,7 +4,7 @@ import https from "https";
 
 import * as cheerio from "cheerio";
 
-import { ScoreRepo } from './scoreRepo';
+import { IScoreRepo, ScoreRepoJSON } from './scoreRepo';
 import { CoiCalculator } from '../services/coiCalculator';
 
 export interface Dog{
@@ -18,7 +18,7 @@ export interface PedigreeResult{
   dog:Dog
 }
 export class EpiDogATService {
-      private scoreRepo:ScoreRepo = ScoreRepo.getInstance()
+      private scoreRepo:IScoreRepo = ScoreRepoJSON.getInstance()
 
       public constructor(){}
 
@@ -76,14 +76,14 @@ export class EpiDogATService {
         }
       }
       
-      public getEpiProgenyByDogName(dogName: string): string[]{
-        console.log("getEpiProgenyByDogName for dogname", "-" + dogName + "-");
-        const epiProgeny = this.scoreRepo.getScoreByDogName(dogName)?.EpiProgeny;
-        if(epiProgeny !== undefined){
-          return epiProgeny
-        }
-        return []
-      }
+      // public getEpiProgenyByDogName(dogName: string): string[]{
+      //   console.log("getEpiProgenyByDogName for dogname", "-" + dogName + "-");
+      //   const epiProgeny = this.scoreRepo.getScoreByDogName(dogName)?.epiProgeny;
+      //   if(epiProgeny !== undefined){
+      //     return epiProgeny
+      //   }
+      //   return []
+      // }
 
       public async getATWithEpiScores(html:PedigreeResult):Promise<PedigreeResult|undefined>{
         if(this.scoreRepo === undefined){
@@ -96,8 +96,8 @@ export class EpiDogATService {
         console.log("getATWithEpiScores getAllScoredDogs")
         this.scoreRepo.getAllScoredDogs().forEach(dog => {
           const selector = "a:contains("+dog+ ")";
-          const score = this.scoreRepo.getScoreByDogName(dog)?.Score
-
+          const score = this.scoreRepo.getScoreByDogName(dog)?.score
+          const hasDirectProgeny = this.scoreRepo.hasDirectEpiProgeny(dog)
             data(selector).each((index2, element) => {
                   const link = data(element);
                   
@@ -117,9 +117,11 @@ export class EpiDogATService {
                     
                     console.log("value", value)
                     console.log("lightness", lightness)
+                    const p = hasDirectProgeny?"<div style='width: 14px; height: 14px; background-color: #7e57c2; border-radius: 50%; margin-right: 6px; display: inline-block;'></div>":""
+                    const scoreHtml = `<a id="${index2}" style="color:${lightness?.textColor} !important; cursor:pointer; background-color: ${lightness?.bgColor};"> (${score}) ${p}</a>`;
 
-                    const linkHtml = "<a id="+index2+" style='color:"+lightness?.textColor+ "!important ;cursor:pointer;font-size:bold;background-color: "+lightness?.bgColor+"'> ("+score+")</a>"
-                    const alink = cheerio.load(linkHtml)
+                    //const scoreHtml = "<a id="+index2+" style='color:"+lightness?.textColor+ "!important ;cursor:pointer;font-size:bold;background-color: "+lightness?.bgColor+"'> ("+score+")<div style='width: 14px, height: 14px, backgroundColor: #e53935,borderRadius: 50%, marginRight: 6px'></div></a>"
+                    const alink = cheerio.load(scoreHtml)
                     const id = "#"+index2
                     const mylink = alink(id);
                     mylink.attr('onclick', "showDetails(this)");
@@ -162,8 +164,8 @@ export class EpiDogATService {
           coi: 23,
           avg: 12,
         };
-      }
-      private mapValueToColor(value: number, minVal: number = 0.0, maxVal: number = 1): { bgColor: string; textColor: string } {
+       }
+       private mapValueToColor(value: number, minVal: number = 0.0, maxVal: number = 1): { bgColor: string; textColor: string } {
         const lightMin = 20; // Dunkelste Lightness
         const lightMax = 90; // Hellste Lightness
     
@@ -198,6 +200,43 @@ export class EpiDogATService {
             textColor: textColor
         };
     }
+    
+    
+    //   private mapValueToColor(value: number, minVal: number = 0.0, maxVal: number = 1): { bgColor: string; textColor: string } {
+    //     const lightMin = 20; // Dunkelste Lightness
+    //     const lightMax = 90; // Hellste Lightness
+    
+    //     // Skalierung des Wertes auf den Bereich 1-10
+    //     let mappedValue = 1 + ((value - minVal) / (maxVal - minVal)) * 9;
+    //     mappedValue = Math.max(1, Math.min(10, Math.round(mappedValue))); // Begrenzung auf 1-10
+    
+    //     // Berechnung der Lightness
+    //     const normalized = (mappedValue - 1) / (10 - 1);
+    //     const inverted = 1 - value;
+    //     const lightness = inverted * (lightMax - lightMin) + lightMin;
+    //     mappedValue = value;
+    //     // Farbzuweisung nach Stufen
+    //     let hue: number;
+    //     let textColor: string;
+    //     if (mappedValue >= 0 && mappedValue <= 0.3) {
+    //         hue = 30; // Orange
+    //         textColor = "black"; // Für helles Orange bessere Lesbarkeit
+    //     } else if (mappedValue > 0.3 && mappedValue <= 0.7) {
+    //         hue = 0; // Rot
+    //         textColor = "white"; // Für Rot bessere Lesbarkeit
+    //     } else if (mappedValue > 0.7 && mappedValue <= 1) {
+    //         hue = 280; // Violett
+    //         textColor = "white"; // Für dunkles Violett bessere Lesbarkeit
+    //     } else {
+    //         hue = 0; // Standardfallback (Rot)
+    //         textColor = "white";
+    //     }
+    
+    //     return {
+    //         bgColor: `hsl(${hue}, 100%, ${lightness}%)`,
+    //         textColor: textColor
+    //     };
+    // }
 
       private getK9DataId(link:string):string|undefined {
         if(link.includes("k9data.com")){

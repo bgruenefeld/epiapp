@@ -41,15 +41,15 @@ app.get("/api/data", (req, res) => {
   res.json({ dogs });
 });
 
-app.get("/api/epiprogeny/:dogName", (req, res) => {
-  //const dogName = req.params.dogName;
-  const encodedDogName = req.params.dogName;
-  const dogName = decodeURIComponent(encodedDogName);
-  const service = new EpiDogATService()
+// app.get("/api/epiprogeny/:dogName", (req, res) => {
+//   //const dogName = req.params.dogName;
+//   const encodedDogName = req.params.dogName;
+//   const dogName = decodeURIComponent(encodedDogName);
+//   const service = new EpiDogATService()
   
-  const dogs = service.getEpiProgenyByDogName(dogName);
-  res.json({ dogs });
-});
+//   const dogs = service.getEpiProgenyByDogName(dogName);
+//   res.json({ dogs });
+// });
 
 app.get("/api/at/:id/:verticalPedigree?", async (req, res) => {
   const k9DogID = req.params.id;

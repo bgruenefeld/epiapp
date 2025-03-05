@@ -1,63 +1,73 @@
-
-import Papa from 'papaparse';
 export type Score = {
-    Score:number;
+    Score: number;
     EpiProgeny: string[];
+};
+export interface DogScore {
+    name: string;
+    score: number;
+    k9Url: string,
+    epiProgeny:Progeny;
 }
-export class ScoreRepo{
-    
-    private static scoreRepository:ScoreRepo;
-                            
-    private scoreFileName = "data/scores.csv";
-    private scoreRepo:  Map<string, Score> = new Map();
-   
+export interface Progeny{P:string[],GP:string[],GGP:string[],GGGP:string[],GGGGP:string[]}  
+
+export interface IScoreRepo {
+    getScoreByDogName(dogName: string): DogScore | undefined;
+    getAllScoredDogs(): string[];
+    hasDirectEpiProgeny(dogName:string):boolean;
+}
+
+export class ScoreRepoJSON implements IScoreRepo {
+    private static scoreRepository: ScoreRepoJSON;
+    private scoreFileName = "data/scores.json";
+    private scoreRepo: Map<string, DogScore> = new Map();
+
     private constructor() {
         this.initScoreRepo();
     }
 
-    public static getInstance(): ScoreRepo {
-        if (!ScoreRepo.scoreRepository) {
-            ScoreRepo.scoreRepository = new ScoreRepo();
+    public static getInstance(): ScoreRepoJSON {
+        if (!ScoreRepoJSON.scoreRepository) {
+            ScoreRepoJSON.scoreRepository = new ScoreRepoJSON();
         }
-        return ScoreRepo.scoreRepository;
+        return ScoreRepoJSON.scoreRepository;
     }
 
-
-    public getScoreByDogName(dogName: string): Score | undefined {
-        
+    public getScoreByDogName(dogName: string): DogScore | undefined {
         return this.scoreRepo.get(dogName);
     }
-    
 
-    public getAllScoredDogs(): string[]{
-        return Array.from(this.scoreRepo.keys())
-    } 
-    private async initScoreRepo():Promise<void> {
+    public getAllScoredDogs(): string[] {
+        return Array.from(this.scoreRepo.keys());
+    }
+    
+    public hasDirectEpiProgeny(dogName:string):boolean {
+        const dog = this.scoreRepo.get(dogName)
+        if(dog === undefined){
+            return false;
+        }
+        return dog.epiProgeny.P?.length>0
+    }
+
+    private async initScoreRepo(): Promise<void> {
         this.scoreRepo = await this.readScoreFile(this.scoreFileName);
     }
-        
-    private async readScoreFile(filename: string): Promise<Map<string, Score>> {
-        
-        const response = await fetch("./"+filename); // Stelle sicher, dass die Datei im `public/`-Ordner liegt
-        const csvData = await response.text();
-        const dogMap = new Map<string, { Score: number; EpiProgeny: string[] }>();
 
-        const result = Papa.parse(csvData, {
-            header: true,
-            skipEmptyLines: true,
-        }); 
-        
-        const records = result.data as { [key: string]: string }[];
-        
-        records.forEach(record => {
-        const name = record.Hundename.trim();
-        const score = parseFloat(record.Score);
-        const epiProgeny = record.EpiProgeny.split(",");
-        
-        dogMap.set(name, { Score: score, EpiProgeny: epiProgeny });
-        
+    private async readScoreFile(filename: string): Promise<Map<string, DogScore>> {
+        const response = await fetch("./" + filename);
+        const jsonData = await response.json();
+        const dogMap = new Map<string, DogScore>();
+
+        jsonData.forEach((record: DogScore) => {
+            const name = record.name.trim();
+            // const score = record.score;
+            // const epiProgeny = [...(record.epiProgeny.GP || []), ...(record.epiProgeny.P || [])];
+
+            dogMap.set(name, record);
         });
-        console.log("dogMap successfully created:",dogMap.size);
+
+        console.log("dogMap successfully created from JSON:", dogMap.size);
         return dogMap;
-        };
+    }
+
+    
 }

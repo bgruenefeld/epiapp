@@ -1,108 +1,100 @@
 import * as fs from 'fs';
 import path from 'path';
 
-import Papa from 'papaparse';
 export type Score = {
-    Score:number;
+    Score: number;
     EpiProgeny: string[];
+};
+export interface DogScore {
+    name: string;
+    score: number;
+    k9Url: string,
+    epiProgeny:Progeny;
 }
-export class ScoreRepo{
-    
-    private static scoreRepository:ScoreRepo;
-    private scoreFileName = "scores.csv";
-    private scoreRepo:  Map<string, Score> = new Map();
-   
+export interface Progeny{P:string[],GP:string[],GGP:string[],GGGP:string[],GGGGP:string[]}  
+
+export interface IScoreRepo {
+    getScoreByDogName(dogName: string): DogScore | undefined;
+    getAllScoredDogs(): string[];
+    hasDirectEpiProgeny(dogName:string):boolean;
+}
+
+export class ScoreRepoJSON implements IScoreRepo {
+    private static scoreRepository: ScoreRepoJSON;
+    private scoreFileName = "scores.json";
+    private scoreRepo: Map<string, DogScore> = new Map();
+
     private constructor() {
         this.initScoreRepo();
-        setInterval(this.keepAlive, 600000);
-        this.keepAlive();
     }
 
-    public static getInstance(): ScoreRepo {
-        if (!ScoreRepo.scoreRepository) {
-            ScoreRepo.scoreRepository = new ScoreRepo();
+    public static getInstance(): ScoreRepoJSON {
+        if (!ScoreRepoJSON.scoreRepository) {
+            ScoreRepoJSON.scoreRepository = new ScoreRepoJSON();
         }
-        return ScoreRepo.scoreRepository;
+        return ScoreRepoJSON.scoreRepository;
     }
 
-
-    public getScoreByDogName(dogName: string): Score | undefined {
-    
+    public getScoreByDogName(dogName: string): DogScore | undefined {
         return this.scoreRepo.get(dogName);
     }
+
+    public getAllScoredDogs(): string[] {
+        return Array.from(this.scoreRepo.keys());
+    }
     
-
-    public getAllScoredDogs(): string[]{
-        return Array.from(this.scoreRepo.keys())
-    } 
-    private initScoreRepo():void {
-        this.scoreRepo = this.readScoreFile(this.scoreFileName);
-    }
-    private async keepAlive() {
-        try {
-            const response = await fetch("https://epiapp-server.onrender.com");
-            const result = await response.json();
-            console.log("Frontend state:", result.message);
-        } catch (error) {
-            console.error("Fehler beim Abrufen der Daten:", error);
+    public hasDirectEpiProgeny(dogName:string):boolean {
+        const dog = this.scoreRepo.get(dogName)
+        if(dog === undefined){
+            return false;
         }
+        return dog.epiProgeny.P?.length>0
     }
-    private readScoreFile(filename: string): Map<string, Score> {
-          // CSV-Datei einlesen
-          // Erstellen einer Map: Key = Hundename, Value = { Score, EpiProgeny }
-        const filePath = path.join(__dirname, ".", filename);
-        const dogMap = new Map<string, { Score: number; EpiProgeny: string[] }>();
-        
-        fs.readFile(filePath, 'utf8', (readErr, csvData) => {
-            if (readErr) {
-                console.error('Fehler beim Lesen der CSV-Datei:', readErr);
-                return;
-            }
-            // CSV parsen; header: true sorgt dafür, dass die erste Zeile als Header genutzt wird,
-            // skipEmptyLines: true ignoriert leere Zeilen.
-            const result = Papa.parse(csvData, {
-            header: true,
-            skipEmptyLines: true,
+
+    private async initScoreRepo(): Promise<void> {
+        this.scoreRepo = await this.readScoreFile(this.scoreFileName);
+    }
+
+    private readScoreFile(filename: string): Map<string, DogScore> {
+        const filePath = path.join(__dirname, "./", filename);
+        const dogMap = new Map<string, DogScore>();
+
+        try {
+            const jsonData = fs.readFileSync(filePath, 'utf8');
+            const records = JSON.parse(jsonData);
+
+            records.forEach((record: DogScore) => {
+                const name = record.name.trim();                
+                dogMap.set(name, record);
             });
-        
-            // Prüfen, ob Parsing-Fehler aufgetreten sind
-            if (result.errors.length > 0) {
-            console.error('Fehler beim Parsen der CSV:', result.errors);
-            return;
-            }
-        
-            // Typisieren der geparsten Daten
-            const records = result.data as { [key: string]: string }[];
-        
-            records.forEach(record => {
-            const name = record.Hundename.trim();
-            const score = parseFloat(record.Score)/213;
-            const epiProgeny = record.EpiProgeny.split(",");
-        
-            dogMap.set(name, { Score: score, EpiProgeny: epiProgeny });
-        });
-        // Schritt 1: Min- und Max-Wert aus der Map extrahieren
-        const scores = Array.from(dogMap.values()).map(dog => dog.Score);
-        const minScore = Math.min(...scores);
-        const maxScore = Math.max(...scores);
 
-        console.log(`Min Score: ${minScore}, Max Score: ${maxScore}`);
+            console.log("dogMap successfully created from JSON:", dogMap.size);
+            
+            // Schritt 1: Min- und Max-Wert aus der Map extrahieren
+            const scores = Array.from(dogMap.values()).map(dog => dog.score);
+            const minScore = Math.min(...scores);
+            const maxScore = Math.max(...scores);
 
-        // Schritt 2: Min-Max-Normalisierung durchführen und speichern
-        dogMap.forEach((dog, name) => {
-            const normalizedScore = (maxScore !== minScore) 
-                ? (dog.Score - minScore) / (maxScore - minScore) 
-                : 0; // Falls alle Werte gleich sind, setze alles auf 0
+            console.log(`Min Score: ${minScore}, Max Score: ${maxScore}`);
 
-            // Speichere den normalisierten Wert zurück in die Map
-            dogMap.set(name, { 
-                Score: parseFloat(normalizedScore.toFixed(3)), 
-                EpiProgeny: dog.EpiProgeny 
+            // Schritt 2: Min-Max-Normalisierung durchführen und speichern
+            dogMap.forEach((dog, name) => {
+                const normalizedScore = (maxScore !== minScore) 
+                    ? (dog.score - minScore) / (maxScore - minScore) 
+                    : 0; // Falls alle Werte gleich sind, setze alles auf 0
+
+                // Speichere den normalisierten Wert zurück in die Map
+                dogMap.set(name, { 
+                    name:name,
+                    k9Url:"",
+                    score: parseFloat(normalizedScore.toFixed(3)), 
+                    epiProgeny: dog.epiProgeny 
+
+                });
             });
-        });
-        // Ausgabe der Map zur Kontrolle
-        console.log("dogMap successfully created:",dogMap.size);
-        });
+        } catch (error) {
+            console.error('Fehler beim Lesen der JSON-Datei:', error);
+        }
         return dogMap;
-        };
+    }
 }

@@ -3,6 +3,7 @@ import { EpiDogATService} from "../serverApi/epiBackend";
 import EpiScoreModal from "../components/EpiScoreModal"
 import EpiScoreBox from "../components/EpiScoreBox";
 import { Dog } from "../models/models";
+import { Progeny } from "../serverApi/scoreRepo";
 // Definiere den Typ für die API-Daten
 
 declare global {
@@ -23,7 +24,7 @@ const CoiCalculator: React.FC = () => {
   const [detailsLoading, setDetailsLoading] = useState<boolean>(false);
   const [dogId, setDogId] = useState<string>("");
 
-  const [dogEpiProgeny, setDogEpiProgeny] = useState<string[]| null>(null);
+  const [dogEpiProgeny, setDogEpiProgeny] = useState<Progeny| undefined>(undefined);
   const [dogName, setDogName] = useState<string>("");
   const [dog,setDog] = useState<Dog|null>()
   const [vertical,setVertical] = useState(false);
@@ -36,7 +37,7 @@ const CoiCalculator: React.FC = () => {
       const epiDogATService = new EpiDogATService();
       if (dog) {
         const offspring = epiDogATService.fetchEpiProgeny(dog)
-        setDogEpiProgeny(offspring ? offspring : []);
+        setDogEpiProgeny(offspring);
         setDogName(dog)
       }
     };
@@ -97,7 +98,7 @@ const CoiCalculator: React.FC = () => {
     const selectedDogName = event.target.value;
     setSelectedDog(selectedDogName);
     setClickedText("");
-    setDogEpiProgeny(null)
+    setDogEpiProgeny(undefined)
 
     if (selectedDogName) {
       let id = ""
@@ -160,8 +161,8 @@ const CoiCalculator: React.FC = () => {
           <li className="nav-item">
             <h4>Legende</h4>
               <ul>
-                <li>P = Eltern (1)</li>
-                <li>GP = Grosseltern (0,5) </li>
+                <li>P = Eltern (2)</li>
+                <li>GP = Grosseltern (0,75) </li>
                 <li>GGP = UrGrosseltern (0,25)</li>
                 <li>...</li>
               </ul>
@@ -172,11 +173,57 @@ const CoiCalculator: React.FC = () => {
               <div>
                 <hr></hr>
                 <h4>Nachkommen von {dogName}:</h4>
-                <ul>
-                  {dogEpiProgeny.map((item, index) => (
-                      <li key={index}>{item.trim()}</li>
-                  ))}
-              </ul>
+                {dogEpiProgeny.P&&(
+                  <div>
+                  <label>P:</label>
+                  <ul>
+                    {dogEpiProgeny.P.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                
+                )}   
+                {dogEpiProgeny.GP&&(
+                  <div>
+                  <label>GP:</label>
+                  <ul>
+                    {dogEpiProgeny.GP.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                )}
+                {dogEpiProgeny.GGP&&(
+                  <div>
+                  <label>GGP:</label>
+                  <ul>
+                    {dogEpiProgeny.GGP.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                )}
+                {dogEpiProgeny.GGGP&&(
+                  <div>
+                  <label>GGGP:</label>
+                  <ul>
+                    {dogEpiProgeny.GGGP.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                )}
+                 {dogEpiProgeny.GGGGP&&(
+                  <div>
+                  <label>GGGGP:</label>
+                  <ul>
+                    {dogEpiProgeny.GGGGP.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                )}                           
               </div>
             )}
           </li>    

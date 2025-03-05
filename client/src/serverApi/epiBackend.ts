@@ -1,12 +1,12 @@
 import { PedigreeResult } from "../models/models";
 import API_URL from "./apiUrl";
-import { ScoreRepo } from "./scoreRepo";
+import { Progeny, ScoreRepoJSON } from "./scoreRepo";
 
 
  export class EpiDogATService {
     
     private serverURL = API_URL;
-    private scoreRepo = ScoreRepo.getInstance();
+    private scoreRepo = ScoreRepoJSON.getInstance();
 
     public async fetchData(): Promise<Response|undefined> {
         try {
@@ -32,13 +32,13 @@ import { ScoreRepo } from "./scoreRepo";
         }
     }
 
-    public fetchEpiProgeny(dogName: string): string[] {
+    public fetchEpiProgeny(dogName: string): Progeny|undefined {
         const offspring = this.scoreRepo.getScoreByDogName(dogName);
         
         if(offspring !== undefined){
-            return offspring.EpiProgeny
+            return offspring.epiProgeny
         }
-        return []
+        return undefined
         
     }
     

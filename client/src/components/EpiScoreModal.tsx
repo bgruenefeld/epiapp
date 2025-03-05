@@ -35,8 +35,8 @@ const EpiScoreModal: React.FC = () => {
                 <b>Generationsgewicht</b> zugewiesen, das sich exponentiell verringert:
                 </p>
                 <ul>
-                <li>Eltern erhalten den Wert <b>1</b></li>
-                <li>Großeltern erhalten den Wert <b>0.5</b></li>
+                <li>Eltern erhalten den Wert <b>2</b></li>
+                <li>Großeltern erhalten den Wert <b>0.75</b></li>
                 <li>Urgroßeltern erhalten den Wert <b>0.25</b></li>
                 <li>usw. (je weiter entfernt, desto niedriger)</li>
                 </ul>
@@ -49,7 +49,7 @@ const EpiScoreModal: React.FC = () => {
                 </p>
                 <MathJax>{"\\[ E^*(h) = \\frac{\\sum g(h, s)}{|S|} \\]"}</MathJax>
                 <p>
-                wobei <MathJax>{"\\( g(h, s) = 2^{-d(h, s)} \\)"}</MathJax> das Generationsgewicht für einen Hund \( h \) in einem Stammbaum \( s \) ist 
+                wobei <MathJax>{"\\( g(h, s) = 2^{-d(h, s)} \\)"}</MathJax> das Generationsgewicht für einen Hund <MathJax>{"\\( h \\)"}</MathJax> in einem Stammbaum \( s \) ist 
                 und <MathJax>{"\\( |S| \\)"}</MathJax> die Anzahl aller Epilepsie-Stammbäume.
                 </p>
 
