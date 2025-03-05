@@ -105,7 +105,7 @@ const CoiCalculator: React.FC = () => {
       if(selectedDogName.split("=").length>0){
         id = selectedDogName.split("=")[1]
       }
-      
+      setDogId(id)
       fetchDogPedigree(id,vertical);
     }
   };
@@ -114,7 +114,7 @@ const CoiCalculator: React.FC = () => {
     
     console.log("handle vertical:", event.target.checked);
     setVertical(event.target.checked);
-
+    fetchDogPedigree(dogId,event.target.checked);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

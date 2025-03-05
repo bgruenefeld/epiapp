@@ -47,8 +47,8 @@ const EpiScoreBox = ( ) => {
             </div>
             <div style={{ display: "flex", alignItems: "center" }}>
               <div style={{
-                width: "14px", height: "14px", backgroundColor: "#ff9800",
-                marginRight: "6px"
+                width: "14px", height: "14px", backgroundColor: "#7e57c2",
+                marginRight: "6px",  borderRadius: "50px"
               }}></div>              
             </div>
           </div>
