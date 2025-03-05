@@ -43,6 +43,7 @@ export class EpiDogATService {
       }
 
       public async getAT(k9DogID: string, verticalPedigree?: boolean): Promise<PedigreeResult | null> {
+        console.log("getAt() called for id:", k9DogID)
         try {
           const agent = new https.Agent({ rejectUnauthorized: false });
           const url = verticalPedigree
@@ -93,7 +94,7 @@ export class EpiDogATService {
 
         const data = cheerio.load(html.pedigree);
         const mainDog = "#result > font";
-        console.log("getATWithEpiScores getAllScoredDogs")
+        console.log("getATWithEpiScores getAllScoredDogs", mainDog)
         this.scoreRepo.getAllScoredDogs().forEach(dog => {
           const selector = "a:contains("+dog+ ")";
           const score = this.scoreRepo.getScoreByDogName(dog)?.score
@@ -115,8 +116,7 @@ export class EpiDogATService {
                       lightness = this.mapValueToColor(value);                                          
                     }                    
                     
-                    console.log("value", value)
-                    console.log("lightness", lightness)
+                    
                     const p = hasDirectProgeny?"<div style='width: 14px; height: 14px; background-color: #7e57c2; border-radius: 50%; margin-right: 6px; display: inline-block;'></div>":""
                     const scoreHtml = `<a id="${index2}" style="color:${lightness?.textColor} !important; cursor:pointer; background-color: ${lightness?.bgColor};"> (${score}) ${p}</a>`;
 
@@ -125,7 +125,7 @@ export class EpiDogATService {
                     const id = "#"+index2
                     const mylink = alink(id);
                     mylink.attr('onclick', "showDetails(this)");
-                    // console.log("dogname data-text", dogName)
+                    
                     mylink.attr('data-text',dog)
                     link.after(alink.html());
             }
