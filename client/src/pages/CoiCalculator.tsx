@@ -28,30 +28,17 @@ const CoiCalculator: React.FC = () => {
   const [dogName, setDogName] = useState<string>("");
   const [dog,setDog] = useState<Dog|null>()
   const [vertical,setVertical] = useState(false);
-
+  const [hoveredAncestors, setHoveredAncestors] = useState<Set<string>>(new Set());
   useEffect(() => {
-
-    
-    window.showDetails = async function (element: HTMLElement) {
-      const dog = element.getAttribute("data-text");
-      const epiDogATService = new EpiDogATService();
-      if (dog) {
-        const offspring = epiDogATService.fetchEpiProgeny(dog)
-        setDogEpiProgeny(offspring);
-        setDogName(dog)
-      }
-    };
-
+    // Fetch-Daten abrufen
     const fetchEpiDogData = async () => {
-     
       try {
-        const epiDogATService = new EpiDogATService()
-        const response = await epiDogATService.fetchData()
+        const epiDogATService = new EpiDogATService();
+        const response = await epiDogATService.fetchData();
         if (response === undefined || !response.ok) {
           throw new Error("Fehler beim Laden der Daten");
         }
         const data = await response.json();
-        // Prüfen, ob die Antwort tatsächlich ein Array ist
         if (Array.isArray(data.dogs)) {
           setServerData(data.dogs);
         } else {
@@ -62,15 +49,61 @@ const CoiCalculator: React.FC = () => {
       } finally {
         setLoading(false);
       }
-  }
-
+    };
+  
     fetchEpiDogData();
+  
     return () => {
-      // Löscht die globale Funktion bei Unmount
-      window.showDetails = undefined;
+      window.showDetails = undefined; // Entfernt globale Funktion sauber
+    };
+  }, []); // Nur einmal ausführen beim Mounting
+  
+  // Separater useEffect für das Highlighting
+  useEffect(() => {
+    const pedigreeContainer = document.getElementById("pedigree-container");
+    if (!pedigreeContainer) return;
+  
+    const elements = pedigreeContainer.querySelectorAll(".ancestor");
+  
+    elements.forEach((element) => {
+      const ancestorName = element.getAttribute("data-ancestor");
+      if (ancestorName && hoveredAncestors.has(ancestorName)) {
+        (element as HTMLElement).style.backgroundColor = "green";
+      } else {
+        (element as HTMLElement).style.backgroundColor = "transparent";
+      }
+    });
+  
+  }, [hoveredAncestors]); // Aktualisiert sich nur, wenn `hoveredAncestors` geändert wird
+  
+  // Separater useEffect für `window.showDetails`
+  useEffect(() => {
+    window.showDetails = async function (element: HTMLElement) {
+      const dog = element.getAttribute("data-text");
+      const epiDogATService = new EpiDogATService();
+      if (dog) {
+        const offspring = epiDogATService.fetchEpiProgeny(dog);
+        setDogEpiProgeny(offspring);
+        setDogName(dog);
+      }
+    };
+  
+    return () => {
+      window.showDetails = undefined; // Entfernt die Funktion beim Unmount sauber
     };
   }, []);
-
+  
+  const handleMouseEnter = (name: string) => {
+    setHoveredAncestors((prev) => new Set(prev).add(name));
+  };
+  
+  const handleMouseLeave = (name: string) => {
+    setHoveredAncestors((prev) => {
+      const newSet = new Set(prev);
+      newSet.delete(name);
+      return newSet;
+    });
+  };
   // Funktion zum Laden von Hundedetails
   const fetchDogPedigree = async (id: string, vertical:boolean) => {
     setDetailsLoading(true);
@@ -230,7 +263,7 @@ const CoiCalculator: React.FC = () => {
         </ul> 
       </div>
       </div>
-      <div className="col-10">
+      <div id="pedigree-container" className="col-10">
       {loading && <p>Lade Daten...</p>}
       {error && <p style={{ color: "red" }}>Fehler: {error}</p>}
 
@@ -286,17 +319,24 @@ const CoiCalculator: React.FC = () => {
           {/* Hundedetails anzeigen */}
           {dog && (
             <div>
-              <div>AVG:{dog.avg} %</div>
+              <div>AVG:{dog.avk?.avk} %, [{dog.avk?.lostAncestors.map(lost => (<span
+                key={lost.name}
+                onMouseEnter={() => handleMouseEnter(lost.name)}
+                onMouseLeave={() => handleMouseLeave(lost.name)}
+                style={{ cursor: "pointer", color: hoveredAncestors.has(lost.name) ? "red" : "white" }}
+             >
+                {lost.name}({lost.count})
+              </span>), )}]</div>
               <div>COI:{dog.coi} %</div>
-              <div>                
-                               
+              <div>                            
             </div>
-
             </div>
           )}
+           
           {dogPedigree && (
-            <div  dangerouslySetInnerHTML={{ __html: dogPedigree }} ></div>
+            <div dangerouslySetInnerHTML={{ __html: dogPedigree }} ></div>
           )}
+           
          
         </>
       )}

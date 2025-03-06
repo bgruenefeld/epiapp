@@ -5,21 +5,26 @@ import https from "https";
 import * as cheerio from "cheerio";
 
 import { IScoreRepo, ScoreRepoJSON } from './scoreRepo';
-import { CoiCalculator } from '../services/coiCalculator';
-
+import { PedigreeCalculator } from '../services/coiCalculator';
+export interface Avk{
+  avk: number; 
+  lostAncestors: { name: string, count: number }[]
+}
 export interface Dog{
     name:string,
     link:string,
     coi?:number,
-    avg?:number
+    avk?:Avk
 }
+
 export interface PedigreeResult{
   pedigree:string,
   dog:Dog
 }
+
 export class EpiDogATService {
       private scoreRepo:IScoreRepo = ScoreRepoJSON.getInstance()
-
+      private URL = "https://www.k9data.com"
       public constructor(){}
 
       public getAllEpiDogs():Dog[]{
@@ -34,9 +39,9 @@ export class EpiDogATService {
                 const aDogLine = line2.split('\t');
                 const dogName = aDogLine[0];
                 const url = aDogLine[1];
-                if (!url || !url.includes("k9data")) {
-                  console.error(`Ungültiges Format in Zeile: ${line2}`);
-                }
+                // if (!url || !url.includes("k9data")) {
+                //   console.error(`Ungültiges Format in Zeile: ${line2}`);
+                // }
                 return {name:dogName, link:url}
         });
         return epiDogs
@@ -47,8 +52,8 @@ export class EpiDogATService {
         try {
           const agent = new https.Agent({ rejectUnauthorized: false });
           const url = verticalPedigree
-            ? `https://www.k9data.com/verticalpedigree.asp?ID=${k9DogID}`
-            : `https://www.k9data.com/fivegen.asp?ID=${k9DogID}`;
+            ? `${this.URL}/verticalpedigree.asp?ID=${k9DogID}`
+            : `${this.URL}/fivegen.asp?ID=${k9DogID}`;
     
           return new Promise((resolve, reject) => {
             https.get(url, { agent }, (res) => {
@@ -76,15 +81,6 @@ export class EpiDogATService {
           return null;
         }
       }
-      
-      // public getEpiProgenyByDogName(dogName: string): string[]{
-      //   console.log("getEpiProgenyByDogName for dogname", "-" + dogName + "-");
-      //   const epiProgeny = this.scoreRepo.getScoreByDogName(dogName)?.epiProgeny;
-      //   if(epiProgeny !== undefined){
-      //     return epiProgeny
-      //   }
-      //   return []
-      // }
 
       public async getATWithEpiScores(html:PedigreeResult):Promise<PedigreeResult|undefined>{
         if(this.scoreRepo === undefined){
@@ -101,8 +97,15 @@ export class EpiDogATService {
           const hasDirectProgeny = this.scoreRepo.hasDirectEpiProgeny(dog)
             data(selector).each((index2, element) => {
                   const link = data(element);
+
+                  
                   
                   if(link.text().trim().toLowerCase().includes(dog.toLowerCase())){
+                    console.log("hunde link", link.text());
+                    link.addClass("ancestor")
+                    link.attr("data-ancestor",link.text().trim())
+                    //console.log("hunde link", link.css() );
+                    
                     const hrefValue = this.getK9DataId(link.attr('href') as string);
                     if(hrefValue !== undefined){
                       link.attr('onclick', "epiat("+hrefValue+")");
@@ -148,11 +151,11 @@ export class EpiDogATService {
         
         const newData = data("table[width='100%']").eq(1);
         result = newData.html() as string;
-        const calculator = new CoiCalculator();
+        const calculator = new PedigreeCalculator();
         const pedigree : Dog[][] = calculator.extractData(html.pedigree)
         const coi = calculator.calculateWrightCOI(pedigree); //calculator.calculateCOI(pedigree);
-        const avg = calculator.calculateAVK(pedigree);
-        return {pedigree:result, dog:{name:"", link:"", avg:avg, coi:coi}}
+        const avk = calculator.calculateAVKWithLostAncestors(pedigree);
+        return {pedigree:result, dog:{name:"", link:"", avk:avk, coi:coi}}
 
       }
       private extractDogInfo(html: string, url: string): Dog | null {
@@ -160,11 +163,10 @@ export class EpiDogATService {
     
         return {
           name: "hasso",
-          link: "url",
-          coi: 23,
-          avg: 12,
+          link: url,          
         };
        }
+
        private mapValueToColor(value: number, minVal: number = 0.0, maxVal: number = 1): { bgColor: string; textColor: string } {
         const lightMin = 20; // Dunkelste Lightness
         const lightMax = 90; // Hellste Lightness
