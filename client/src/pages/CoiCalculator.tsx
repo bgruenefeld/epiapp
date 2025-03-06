@@ -319,14 +319,15 @@ const CoiCalculator: React.FC = () => {
           {/* Hundedetails anzeigen */}
           {dog && (
             <div>
-              <div>AVG:{dog.avk?.avk} %, [{dog.avk?.lostAncestors.map(lost => (<span
+              <div>AVG:{dog.avk?.avk} %, Hunde {dog.avk?.lostAncestors.map(lost => (<span
+                className="border"
                 key={lost.name}
                 onMouseEnter={() => handleMouseEnter(lost.name)}
                 onMouseLeave={() => handleMouseLeave(lost.name)}
                 style={{ cursor: "pointer", color: hoveredAncestors.has(lost.name) ? "red" : "white" }}
              >
-                {lost.name}({lost.count})
-              </span>), )}]</div>
+                {lost.name}({lost.count}),&nbsp;
+              </span>), )}</div>
               <div>COI:{dog.coi} %</div>
               <div>                            
             </div>

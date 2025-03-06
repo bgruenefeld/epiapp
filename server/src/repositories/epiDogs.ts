@@ -101,10 +101,9 @@ export class EpiDogATService {
                   
                   
                   if(link.text().trim().toLowerCase().includes(dog.toLowerCase())){
-                    console.log("hunde link", link.text());
+                     
                     link.addClass("ancestor")
-                    link.attr("data-ancestor",link.text().trim())
-                    //console.log("hunde link", link.css() );
+                    link.attr("data-ancestor",link.text().trim()) 
                     
                     const hrefValue = this.getK9DataId(link.attr('href') as string);
                     if(hrefValue !== undefined){

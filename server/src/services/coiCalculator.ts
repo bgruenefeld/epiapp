@@ -79,28 +79,32 @@ export class PedigreeCalculator{
     }
 
     public calculateAVKWithLostAncestors(pedigree: Dog[][]): Avk {
-
-      const allAncestors = pedigree.flat().map(dog => dog.name);
+      // Entferne "Unknown" Einträge
+      const allAncestors = pedigree.flat().map(dog => dog.name).filter(name => name !== "Unknown");
+    
       const totalAncestors = allAncestors.length;
       const uniqueAncestorsSet = new Set(allAncestors);
       const uniqueAncestorsCount = uniqueAncestorsSet.size;
-
+    
       // Berechnung des AVK
       const avk = parseFloat(((uniqueAncestorsCount / totalAncestors) * 100).toFixed(2));
-
+    
       // Ermittlung der mehrfach vorkommenden Ahnen und deren Häufigkeit
       const ancestorCounts = allAncestors.reduce((acc, name) => {
-          acc[name] = (acc[name] || 0) + 1;
-          return acc;
+        acc[name] = (acc[name] || 0) + 1;
+        return acc;
       }, {} as Record<string, number>);
-
-      // Liste der mehrfach vorkommenden Ahnen mit ihrer Häufigkeit
+    
+      // Liste der mehrfach vorkommenden Ahnen mit ihrer Häufigkeit, ohne "Unknown", absteigend sortiert
       const lostAncestors = Object.entries(ancestorCounts)
-          .filter(([_, count]) => count > 1) // nur Ahnen mit mehr als einer Vorkommen zählen
-          .map(([name, count]) => ({ name, count }));
-
+        .filter(([name, count]) => count > 1) // nur Ahnen mit mehr als einer Vorkommen zählen
+        .map(([name, count]) => ({ name, count }))
+        .sort((a, b) => b.count - a.count); // Absteigend sortieren
+    
       return { avk, lostAncestors };
     }
+    
+    
 
     public extractData(html: string): Dog[][] {
 
