@@ -325,7 +325,7 @@ const CoiCalculator: React.FC = () => {
                 key={lost.name}
                 onMouseEnter={() => handleMouseEnter(lost.name)}
                 onMouseLeave={() => handleMouseLeave(lost.name)}
-                style={{ cursor: "pointer", margin: "2px", color: hoveredAncestors.has(lost.name) ? "white" : "" }}>
+                style={{ cursor: "pointer", margin: "2px", color: hoveredAncestors.has(lost.name) ? "white" : "white" }}>
                    {lost.name}
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary"
                  style={{zIndex: "1000"}}
