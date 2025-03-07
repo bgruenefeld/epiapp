@@ -92,7 +92,17 @@ const CoiCalculator: React.FC = () => {
       window.showDetails = undefined; // Entfernt die Funktion beim Unmount sauber
     };
   }, []);
-  
+  const handelAVKDog = (dog:string) =>{
+    const epiDogATService = new EpiDogATService();
+    if (dog) {
+      const offspring = epiDogATService.fetchEpiProgeny(dog);
+      setDogEpiProgeny(offspring);
+      setDogName(dog);
+    }else{
+      setDogEpiProgeny(undefined);
+      setDogName("");
+    }
+  }
   const handleMouseEnter = (name: string) => {
     setHoveredAncestors((prev) => new Set(prev).add(name));
   };
@@ -195,16 +205,32 @@ const CoiCalculator: React.FC = () => {
           {dog && (
             <div>
               <h4>Genetische Maße:</h4>
-              <div><b>COI:</b><span>{dog.coi} %</span></div>
-              <div><b>AVK:</b>{dog.avk?.avk} %  
+              <div className="row g-3 align-items-center">
+                  <div className="col-auto">
+                    <label className="col-form-label">COI:</label>
+                  </div>
+                  <div className="col-auto">
+                    {dog.coi} %
+                  </div>
+              </div>
+              <div className="row g-3 align-items-center">
+                  <div className="col-auto">
+                    <label className="col-form-label">AVK:</label>
+                  </div>
+                  <div className="col-auto">
+                    {dog.avk?.avk} % 
+                  </div>
+              </div>
+              
               <hr></hr>
               <div><b>AVK Ahnen:</b></div>
               {dog.avk?.lostAncestors.map(lost => (   
                 <button type="button" 
                 className="btn btn-sm btn-outline-secondary position-relative"
                 key={lost.name}
-                onMouseEnter={() => handleMouseEnter(lost.name)}
-                onMouseLeave={() => handleMouseLeave(lost.name)}
+                onMouseEnter={() => {handleMouseEnter(lost.name)}}
+                onMouseLeave={() => {handleMouseLeave(lost.name)}}
+                onClick={() => handelAVKDog(lost.name)}
                 style={{ cursor: "pointer", margin: "2px", color: "white" }}>
                    {lost.name}
                 <span className=" position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary"
@@ -215,11 +241,8 @@ const CoiCalculator: React.FC = () => {
                </span>
               </button>
               
-            ), )}</div>
-              
-              <div>                            
-            </div>
-            </div>
+               ), )}</div>
+                      
           )}
           </li>  
           <li className="nav-item">
