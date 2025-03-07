@@ -25,3 +25,10 @@ a:active {
   transition: background-color 0.3s ease;
 }
 
+.avkSpan{
+  width: 250px;  /* Breite des Buttons anpassen */
+    white-space: nowrap; /* Verhindert Umbruch des Textes */
+    overflow: hidden; /* Versteckt den überlaufenden Text */
+    text-overflow: ellipsis; /* Zeigt "..." für abgeschnittenen Text */
+}
+

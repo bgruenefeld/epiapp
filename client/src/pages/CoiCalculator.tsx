@@ -192,20 +192,42 @@ const CoiCalculator: React.FC = () => {
         <ul className="nav nav-pills flex-column mb-auto">         
           
           <li className="nav-item">
-            <h4>Legende</h4>
-              <ul>
-                <li>P = Eltern (2)</li>
-                <li>GP = Grosseltern (0,75) </li>
-                <li>GGP = UrGrosseltern (0,25)</li>
-                <li>...</li>
-              </ul>
+          {dog && (
+            <div>
+              <h4>Genetische Maße:</h4>
+              <div><b>COI:</b><span>{dog.coi} %</span></div>
+              <div><b>AVK:</b>{dog.avk?.avk} %  
+              <hr></hr>
+              <div><b>AVK Ahnen:</b></div>
+              {dog.avk?.lostAncestors.map(lost => (   
+                <button type="button" 
+                className="btn btn-sm btn-outline-secondary position-relative"
+                key={lost.name}
+                onMouseEnter={() => handleMouseEnter(lost.name)}
+                onMouseLeave={() => handleMouseLeave(lost.name)}
+                style={{ cursor: "pointer", margin: "2px", color: "white" }}>
+                   {lost.name}
+                <span className=" position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary"
+                 style={{zIndex: "1000"}}
+                >
+                  {lost.count}
+                <span className="visually-hidden">unread messages</span>
+               </span>
+              </button>
+              
+            ), )}</div>
+              
+              <div>                            
+            </div>
+            </div>
+          )}
           </li>  
           <li className="nav-item">
             {dogEpiProgeny && (
               
               <div>
                 <hr></hr>
-                <h4>Nachkommen von {dogName}:</h4>
+                <h4>Epilepsie Nachkommen von {dogName}:</h4>
                 {dogEpiProgeny.P&&(
                   <div>
                   <label>P:</label>
@@ -296,7 +318,7 @@ const CoiCalculator: React.FC = () => {
 
           <div className="col-12">        
             <select id="dog-select" value={selectedDog} onChange={handleChange} className="form-select">
-                  <option value="">-- Erkrankte Hunde auswählen --</option>
+                  <option value="">-- Epilepsie erkrankte Hunde auswählen --</option>
                   {serverData.map((dog, index) => (
                     <option key={index} value={dog.link}>
                       {dog.name}
@@ -307,49 +329,19 @@ const CoiCalculator: React.FC = () => {
           <div className="col-12">
           <EpiScoreModal />          
           </div>
-          <div className="col-12">          
+          <div className="col-12 ms-auto">          
           <EpiScoreBox/> 
           </div>
 
         </div>
           
           {/* Ladeanzeige für Details */}
-          {detailsLoading && <p>Ahnentafel wird geladen...</p>}
-
-          {/* Hundedetails anzeigen */}
-          {dog && (
-            <div>
-              <div>AVG:{dog.avk?.avk} %, Hunde {dog.avk?.lostAncestors.map(lost => (
-                
-                <button type="button" className="btn btn-sm btn-outline-secondary position-relative"
-                key={lost.name}
-                onMouseEnter={() => handleMouseEnter(lost.name)}
-                onMouseLeave={() => handleMouseLeave(lost.name)}
-                style={{ cursor: "pointer", margin: "2px", color: hoveredAncestors.has(lost.name) ? "white" : "white" }}>
-                   {lost.name}
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary"
-                 style={{zIndex: "1000"}}
-                >
-                  {lost.count}
-                <span className="visually-hidden">unread messages</span>
-               </span>
-              </button>
-                
-            //     <span
-            //     className="border"
-            //     key={lost.name}
-            //     onMouseEnter={() => handleMouseEnter(lost.name)}
-            //     onMouseLeave={() => handleMouseLeave(lost.name)}
-            //     style={{ cursor: "pointer", color: hoveredAncestors.has(lost.name) ? "red" : "white" }}
-            //  >
-            //     {lost.name}({lost.count}),&nbsp;
-            //   </span>
-            ), )}</div>
-              <div>COI:{dog.coi} %</div>
-              <div>                            
-            </div>
-            </div>
-          )}
+          {detailsLoading && <div className="d-flex justify-content-center">
+                               <div className="spinner-border" role="status">
+                                 <span className="visually-hidden">Loading...</span>
+                                </div>
+                              </div>}
+          {/* Hundedetails anzeigen */}         
            
           {dogPedigree && (
             <div dangerouslySetInnerHTML={{ __html: dogPedigree }} ></div>

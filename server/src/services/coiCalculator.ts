@@ -80,7 +80,7 @@ export class PedigreeCalculator{
 
     public calculateAVKWithLostAncestors(pedigree: Dog[][]): Avk {
       // Entferne "Unknown" Einträge
-      const allAncestors = pedigree.flat().map(dog => dog.name).filter(name => name !== "Unknown");
+      const allAncestors = pedigree.flat().map(dog => dog.name).filter(name => name !== "(Unknown)");
     
       const totalAncestors = allAncestors.length;
       const uniqueAncestorsSet = new Set(allAncestors);

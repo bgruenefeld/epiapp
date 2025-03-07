@@ -6,7 +6,7 @@ const EpiScoreBox = ( ) => {
             alignItems: "center", 
             gap: "12px", 
             fontFamily: "Arial, sans-serif",
-            margin: "20px 0",
+            margin: "0px 0",
             padding: "8px",
             borderRadius: "8px",
           }}>
