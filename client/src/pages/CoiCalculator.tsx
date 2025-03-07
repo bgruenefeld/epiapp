@@ -319,15 +319,32 @@ const CoiCalculator: React.FC = () => {
           {/* Hundedetails anzeigen */}
           {dog && (
             <div>
-              <div>AVG:{dog.avk?.avk} %, Hunde {dog.avk?.lostAncestors.map(lost => (<span
-                className="border"
+              <div>AVG:{dog.avk?.avk} %, Hunde {dog.avk?.lostAncestors.map(lost => (
+                
+                <button type="button" className="btn btn-sm btn-outline-secondary position-relative"
                 key={lost.name}
                 onMouseEnter={() => handleMouseEnter(lost.name)}
                 onMouseLeave={() => handleMouseLeave(lost.name)}
-                style={{ cursor: "pointer", color: hoveredAncestors.has(lost.name) ? "red" : "white" }}
-             >
-                {lost.name}({lost.count}),&nbsp;
-              </span>), )}</div>
+                style={{ cursor: "pointer", margin: "2px", color: hoveredAncestors.has(lost.name) ? "white" : "" }}>
+                   {lost.name}
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary"
+                 style={{zIndex: "1000"}}
+                >
+                  {lost.count}
+                <span className="visually-hidden">unread messages</span>
+               </span>
+              </button>
+                
+            //     <span
+            //     className="border"
+            //     key={lost.name}
+            //     onMouseEnter={() => handleMouseEnter(lost.name)}
+            //     onMouseLeave={() => handleMouseLeave(lost.name)}
+            //     style={{ cursor: "pointer", color: hoveredAncestors.has(lost.name) ? "red" : "white" }}
+            //  >
+            //     {lost.name}({lost.count}),&nbsp;
+            //   </span>
+            ), )}</div>
               <div>COI:{dog.coi} %</div>
               <div>                            
             </div>
