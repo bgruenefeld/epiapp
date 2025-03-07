@@ -103,6 +103,7 @@ export class EpiDogATService {
                   if(link.text().trim().toLowerCase().includes(dog.toLowerCase())){
                      
                     link.addClass("ancestor")
+                    link.addClass("blur-text")
                     link.attr("data-ancestor",link.text().trim()) 
                     
                     const hrefValue = this.getK9DataId(link.attr('href') as string);

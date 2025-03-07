@@ -68,9 +68,12 @@ const CoiCalculator: React.FC = () => {
     elements.forEach((element) => {
       const ancestorName = element.getAttribute("data-ancestor");
       if (ancestorName && hoveredAncestors.has(ancestorName)) {
-        (element as HTMLElement).style.backgroundColor = "green";
+        (element as HTMLElement).style.border= "2px solid #92ea0b";
+        (element as HTMLElement).style.backgroundColor = "#6c757d";
+        
       } else {
         (element as HTMLElement).style.backgroundColor = "transparent";
+        (element as HTMLElement).style.border= "transparent";
       }
     });
   
