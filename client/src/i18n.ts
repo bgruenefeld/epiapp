@@ -15,7 +15,7 @@ i18n
       escapeValue: false, // Erlaubt HTML in Übersetzungen
     },
     backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json', // Pfad zu den JSON-Übersetzungen
+      loadPath: '/epiapp/locales/{{lng}}/{{ns}}.json', // Pfad zu den JSON-Übersetzungen
     },
   });
 
