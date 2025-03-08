@@ -1,0 +1,14 @@
+{
+    "welcome": "Willkommen bei Breed Optimizer",
+    "language": "Sprache",
+    "home-description-p1": "Die genetische Vielfalt beim Labrador Retriever nimmt stetig ab, wodurch es für Züchter zunehmend schwieriger wird, gesunde, leistungsfähige und wesensfeste Hunde zu züchten. Ein enger Genpool kann zu erhöhtem Krankheitsrisiko, Leistungseinbußen und instabilem Wesen führen – Herausforderungen, mit denen verantwortungsbewusste Züchter täglich konfrontiert sind.",
+    "home-description-p2": "Mit BreedOptimizer bieten wir eine datengetriebene Plattform, die Züchtern hilft, nachhaltige und fundierte Zuchtentscheidungen zu treffen. Basierend auf frei verfügbaren Datenquellen wie K9data.com, Saritas Blog, Oakmore und anderen Hundedatenbanken entwickeln wir Analysetools, die den Zuchtprozess intelligenter, effizienter und transparenter gestalten.",
+    "home-description-header": "Was BreedOptimizer Züchtern bieten wird:",
+    "home-description-point1": "Diversitätsanalyse zur Vermeidung von Inzucht und genetischen Engpässen",
+    "home-description-point2": "Optimierte Zuchtplanung mit datenbasierten Empfehlungen für die beste Verpaarung",
+    "home-description-point3": "Detaillierte Abstammungsanalysen zur besseren Einschätzung von Gesundheits- und Leistungspotenzial",
+    "home-description-point4": "Werkzeuge für eine langfristig stabile Zuchtstrategie",
+    "home-description-p3": "BreedOptimizer wird kontinuierlich weiterentwickelt, und neue Funktionen werden schrittweise integriert. Nicht alle geplanten Tools sind aktuell verfügbar, aber unser Ziel ist es, eine umfassende und leistungsfähige Plattform bereitzustellen, damit Züchter die Zukunft der Labrador-Zucht aktiv und nachhaltig gestalten können.",
+    "home-episcorer-desc": "Analyse der Epilepsiebelastung in Ahnentafeln.",
+    "home-coi-desc": "Berechnung des Inzuchtkoeffizienten (COI) für die Zuchtplanung."
+}
