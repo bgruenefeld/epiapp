@@ -36,6 +36,8 @@ app.get("/", (req, res) => {
 
 
 app.get("/api/data", (req, res) => {
+  logIp(req)
+
   const service = new EpiDogATService()
   const dogs = service.getAllEpiDogs()
   res.json({ dogs });
@@ -52,6 +54,7 @@ app.get("/api/data", (req, res) => {
 // });
 
 app.get("/api/at/:id/:verticalPedigree?", async (req, res) => {
+  logIp(req)
   const k9DogID = req.params.id;
   console.log("req.params.verticalPedigree: ",  req.params.verticalPedigree);
   let verticalPedigree = false;
@@ -78,3 +81,17 @@ app.get("/api/at/:id/:verticalPedigree?", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`🚀 Server läuft auf http://localhost:${PORT}`);
 });
+
+
+function logIp(req: Request) {
+  const forwarded = req.headers["x-forwarded-for"];
+  let userIp = "";
+
+  if (typeof forwarded === "string") {
+    userIp = forwarded.split(",")[0].trim(); // Erste IP extrahieren
+  } else {
+    userIp = req.connection.remoteAddress || "";
+  }
+
+  console.log("Nutzer-IP:", userIp);
+}
