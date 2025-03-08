@@ -7,8 +7,9 @@ import Episcorer from "./pages/Episcorer";
 import CoiCalculator from "./pages/CoiCalculator";
 import Home from "./pages/Home";
 import HilfetextModal from './components/helpModal';
+import i18n from './i18n';
 function App() {
-  
+  //const { t, i18n} = useTranslation();
   return (
     <>
     <Router basename="/epiapp">
@@ -24,6 +25,10 @@ function App() {
             <li className="nav-item nav-link"><Link to="./home" className="nav-item nav-link">Home</Link></li>
             <li className="nav-item nav-link"><Link to="./episcorer" className="nav-item nav-link">Coi Calculator</Link></li>
             <li className="nav-item nav-link"><Link to="./coi-calculator" className="nav-item nav-link">Episcorer</Link></li>   
+          </ul>
+          <ul>
+          <button onClick={() => i18n.changeLanguage('de')}>Deutsch</button>
+          <button onClick={() => i18n.changeLanguage('en')}>English</button>
           </ul>
           <ul className="navbar-nav ms-auto">
             <li className="nav-item"><HilfetextModal /></li>

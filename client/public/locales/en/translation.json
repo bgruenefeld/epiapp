@@ -1,0 +1,14 @@
+{
+    "welcome": "Welcome to Breed Optimizer",
+    "language": "Language",
+    "home-description-p1": "Genetic diversity in Labrador Retrievers is steadily declining, making it increasingly difficult for breeders to produce healthy, high-performing, and well-tempered dogs. A limited gene pool can lead to a higher risk of diseases, reduced performance, and unstable temperaments—challenges that responsible breeders face every day.",
+    "home-description-p2": "With BreedOptimizer, we provide a data-driven platform that helps breeders make sustainable and well-founded breeding decisions. Using freely available data sources such as K9data.com, Sarita’s Blog, Oakmore, and other canine databases, we develop analytical tools to make the breeding process smarter, more efficient, and more transparent.",
+    "home-description-header": "What BreedOptimizer will offer breeders:",
+    "home-description-point1": "Diversity analysis to prevent inbreeding and genetic bottlenecks",
+    "home-description-point2": "Optimized breeding planning with data-based recommendations for the best pairings",
+    "home-description-point3": "Detailed pedigree analysis for better assessment of health and performance potential",
+    "home-description-point4": "Tools for a long-term, stable breeding strategy",
+    "home-description-p3": "BreedOptimizer is continuously evolving, with new features being integrated step by step. Not all planned tools are currently available, but our goal is to provide a comprehensive and powerful platform, enabling breeders to actively and sustainably shape the future of Labrador breeding.",
+    "home-episcorer-desc": "Analysis of epilepsy burden in pedigrees.",
+    "home-coi-desc": "Calculation of the inbreeding coefficient (COI) and ancestor loss coefficient for breeding planning."
+}
