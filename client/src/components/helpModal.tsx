@@ -1,31 +1,29 @@
 import { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-
+import { useTranslation, Trans } from "react-i18next";
 const HilfetextModal: React.FC = () => {
   const [show, setShow] = useState<boolean>(false);
-
+  const { t } = useTranslation(); 
   return (
     <>
       {/* Button zum Öffnen des Modals */}
       <Button variant="primary" onClick={() => setShow(true)}>
-        Hilfe anzeigen
+      {t('help-modal-show-button')}
       </Button>
 
       {/* Das Modal */}
       <Modal show={show} onHide={() => setShow(false)} size="xl">
         <Modal.Header closeButton>
-          <Modal.Title>Erläuterung</Modal.Title>
+          <Modal.Title>{t('help-modal-header')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <p>In der Ahnentafel sind Hunde farblich markiert, die in Stammbäumen von Hunden mit idiopathischer Epilepsie vorkommen. Je höher der Zahlenwert, desto häufiger sind sie in den Ahnentafeln vertreten.</p>
-            <p>Ein Klick auf die Zahl hinter einem Hundenamen zeigt im linken Seitenbereich die Nachkommen mit Epilepsie an, in deren Ahnentafel der ausgewählte Hund vorkommt.</p>
-            <p>Im Eingabefeld <b>Hunde-ID</b> kann eine K9data-Ahnentafel-ID eingegeben werden. Dabei kann es sich natürlich auch um eine <b>Testverpaarung</b> handeln.</p>
+            <Trans i18nKey="help-modal-1" components={{ 1: <strong /> }}/>
             <img src="./k9data-help.png" width="75%"></img>
-            <p>Ein Klick auf <b>Hund suchen</b> lädt die entsprechende Ahnentafel und zeigt sie mit den verfügbaren Epi-Scores an.</p>                      
+            <Trans i18nKey="help-modal-2" components={{ 1: <strong /> }}/>                    
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShow(false)}>
-            Schließen
+          {t('help-modal-close-button')}
           </Button>
         </Modal.Footer>
       </Modal>

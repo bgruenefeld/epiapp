@@ -4,6 +4,7 @@ import EpiScoreModal from "../components/EpiScoreModal"
 import EpiScoreBox from "../components/EpiScoreBox";
 import { Dog } from "../models/models";
 import { Progeny } from "../serverApi/scoreRepo";
+import { useTranslation } from "react-i18next";
 // Definiere den Typ für die API-Daten
 
 declare global {
@@ -29,6 +30,10 @@ const CoiCalculator: React.FC = () => {
   const [dog,setDog] = useState<Dog|null>()
   const [vertical,setVertical] = useState(false);
   const [hoveredAncestors, setHoveredAncestors] = useState<Set<string>>(new Set());
+
+
+  const { t } = useTranslation(); 
+  
   useEffect(() => {
     // Fetch-Daten abrufen
     const fetchEpiDogData = async () => {
@@ -207,7 +212,8 @@ const CoiCalculator: React.FC = () => {
           <li className="nav-item">
           {dog && (
             <div>
-              <h4>Genetische Maße:</h4>
+              <h4> {t('epi-scorer-genetic')}:</h4>
+              <p>( {t('epi-scorer-5-gen')})</p>
               <div className="row g-3 align-items-center">
                   <div className="col-auto">
                     <label className="col-form-label">COI:</label>
@@ -226,7 +232,7 @@ const CoiCalculator: React.FC = () => {
               </div>
               
               <hr></hr>
-              <div><b>AVK Ahnen:</b></div>
+              <div><b>{t('epi-scorer-avk-anchestors')}:</b></div>
               {dog.avk?.lostAncestors.map(lost => (   
                 <button type="button" 
                 className="btn btn-sm btn-outline-secondary position-relative"
@@ -253,7 +259,7 @@ const CoiCalculator: React.FC = () => {
               
               <div>
                 <hr></hr>
-                <h4>Epilepsie Nachkommen von {dogName}:</h4>
+                <h4>{t('epi-scorer-epi-progeny')} {dogName}:</h4>
                 {dogEpiProgeny.P&&(
                   <div>
                   <label>P:</label>
@@ -312,8 +318,8 @@ const CoiCalculator: React.FC = () => {
       </div>
       </div>
       <div id="pedigree-container" className="col-10">
-      {loading && <p>Lade Daten...</p>}
-      {error && <p style={{ color: "red" }}>Fehler: {error}</p>}
+      {loading && <p>{t('epi-scorer-loading')}</p>}
+      {error && <p style={{ color: "red" }}>{t('epi-scorer-loading-error')}: {error}</p>}
 
       {!loading && !error && (
         <>
@@ -333,18 +339,18 @@ const CoiCalculator: React.FC = () => {
             <div className="form-check">
               <input className="form-check-input" type="checkbox" id="inlineFormCheck" onChange={handleVertical} checked={vertical}></input>
               <label className="form-check-label" htmlFor="inlineFormCheck">
-                vertikale Ahnentafel
+              {t('epi-scorer-vertical-pedigree')} 
               </label>
             </div>
           </div>
 
           <div className="col-12">          
-            <button onClick={handleFetchById} className="btn btn-primary">Hund suchen</button>
+            <button onClick={handleFetchById} className="btn btn-primary">{t('epi-scorer-show-pedigree')}</button>
           </div>
 
           <div className="col-12">        
             <select id="dog-select" value={selectedDog} onChange={handleChange} className="form-select">
-                  <option value="">-- Epilepsie erkrankte Hunde auswählen --</option>
+                  <option value="">-- {t('epi-scorer-epileptic-dogs')} --</option>
                   {serverData.map((dog, index) => (
                     <option key={index} value={dog.link}>
                       {dog.name}

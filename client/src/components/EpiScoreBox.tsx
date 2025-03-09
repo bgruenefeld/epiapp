@@ -1,5 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 const EpiScoreBox = ( ) => {
-    
+    const { t } = useTranslation(); 
     return (
         <div style={{ 
             display: "flex", 
@@ -15,7 +17,7 @@ const EpiScoreBox = ( ) => {
                 width: "14px", height: "14px",
                 borderRadius: "50%", marginRight: "6px"
               }}></div>
-              <span style={{ color: "white", fontSize: "14px" }}>{"Episcore Legende:"}</span>
+              <span style={{ color: "white", fontSize: "14px" }}>{t('epi-scorer-legend')}:</span>
             </div>
             <div style={{ display: "flex", alignItems: "center" }}>
               <div style={{
@@ -43,7 +45,7 @@ const EpiScoreBox = ( ) => {
                 width: "14px", height: "14px",
                 borderRadius: "50%", marginRight: "6px"
               }}></div>
-              <span style={{ color: "white", fontSize: "14px" }}>{"Hund mit direkten Epi Nachkommen:"}</span>
+              <span style={{ color: "white", fontSize: "14px" }}>{t('epi-scorer-legend-epidogs')}</span>
             </div>
             <div style={{ display: "flex", alignItems: "center" }}>
               <div style={{

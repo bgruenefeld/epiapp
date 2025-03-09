@@ -10,5 +10,21 @@
     "home-description-point4": "Werkzeuge für eine langfristig stabile Zuchtstrategie",
     "home-description-p3": "BreedOptimizer wird kontinuierlich weiterentwickelt, und neue Funktionen werden schrittweise integriert. Nicht alle geplanten Tools sind aktuell verfügbar, aber unser Ziel ist es, eine umfassende und leistungsfähige Plattform bereitzustellen, damit Züchter die Zukunft der Labrador-Zucht aktiv und nachhaltig gestalten können.",
     "home-episcorer-desc": "Analyse der Epilepsiebelastung in Ahnentafeln.",
-    "home-coi-desc": "Berechnung des Inzuchtkoeffizienten (COI) für die Zuchtplanung."
+    "home-coi-desc": "Berechnung des Inzuchtkoeffizienten (COI) für die Zuchtplanung.",
+    "help-modal-1": "<p>In der Ahnentafel sind Hunde farblich markiert, die in Stammbäumen von Hunden mit idiopathischer Epilepsie vorkommen. Je höher der Zahlenwert, desto häufiger sind sie in den Ahnentafeln vertreten.</p><p>Ein Klick auf die Zahl hinter einem Hundenamen zeigt im linken Seitenbereich die Nachkommen mit Epilepsie an, in deren Ahnentafel der ausgewählte Hund vorkommt.</p><p>Im Eingabefeld <1>Hunde-ID</1> kann eine K9data-Ahnentafel-ID eingegeben werden. Dabei kann es sich natürlich auch um eine <1>Testverpaarung</1> handeln.</p><p>Ein Klick auf <1>Hund suchen</1> lädt die entsprechende Ahnentafel und zeigt sie mit den verfügbaren Epi-Scores an.</p>",
+    "help-modal-2": "<p>Ein Klick auf <1>Hund suchen</1> lädt die entsprechende Ahnentafel und zeigt sie mit den verfügbaren Epi-Scores an.</p>",
+    "help-modal-header": "Erläuterungen",
+    "help-modal-close-button": "Schliessen",
+    "help-modal-show-button": "Hilfe anzeigen",
+    "epi-scorer-genetic": "Genetische Maße",
+    "epi-scorer-5-gen": "5 Generationen",
+    "epi-scorer-avk-anchestors": "AVK Ahnen",
+    "epi-scorer-epi-progeny": "Epilepsie Nachkommen von",
+    "epi-scorer-loading": "Lade Daten ...",
+    "epi-scorer-loading-error": "Fehler",
+    "epi-scorer-vertical-pedigree": "vertikale Ahnentafel",
+    "epi-scorer-epileptic-dogs": "Epilepsie erkrankte Hunde auswählen",
+    "epi-scorer-show-pedigree": "Suchen",
+    "epi-scorer-legend": "Episcore Legende",
+    "epi-scorer-legend-epidogs": "Hund mit direkten Epi Nachkommen"
 }
