@@ -43,9 +43,10 @@ app.get("/api/data", async (req, res) => {
     try {
       const response = await fetch(`http://ipinfo.io/${ip}/json`);
       const data = await response.json(); // JSON-Daten auslesen
-      console.log("IP-Info:", data);
+      console.log("User info:", data.city+ "/"+ data.region+"/"+data.country);
     } catch (error) {
       console.error("Fehler beim Abrufen von IP-Info:", error);
+      
     }
   }  
   
