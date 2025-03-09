@@ -10,5 +10,10 @@
     "home-description-point4": "Tools for a long-term, stable breeding strategy",
     "home-description-p3": "BreedOptimizer is continuously evolving, with new features being integrated step by step. Not all planned tools are currently available, but our goal is to provide a comprehensive and powerful platform, enabling breeders to actively and sustainably shape the future of Labrador breeding.",
     "home-episcorer-desc": "Analysis of epilepsy burden in pedigrees.",
-    "home-coi-desc": "Calculation of the inbreeding coefficient (COI) and ancestor loss coefficient for breeding planning."
+    "home-coi-desc": "Calculation of the inbreeding coefficient (COI) and ancestor loss coefficient for breeding planning.",
+    "help-modal-1": "<p>In the pedigree, dogs are color-coded if they appear in the family trees of dogs with idiopathic epilepsy. The higher the numerical value, the more frequently they appear in the pedigrees.</p><p>Clicking on the number next to a dog's name displays the offspring with epilepsy in the left side panel, in whose pedigree the selected dog appears.</p><p>In the input field <1>Dog ID</1>, you can enter a K9data pedigree ID. This can, of course, also be a <1>test mating</1>.</p><p>Clicking on <1>Search Dog</1> loads the corresponding pedigree and displays it with the available Epi-Scores.</p>",
+    "help-modal-2": "<p>Clicking on <1>Search Dog</1> loads the corresponding pedigree and displays it with the available Epi-Scores.</p>",
+    "help-modal-header": "Explanation",
+    "help-modal-close-button": "close",
+    "help-modal-show-button": "show help"
 }
