@@ -15,5 +15,16 @@
     "help-modal-2": "<p>Clicking on <1>Search Dog</1> loads the corresponding pedigree and displays it with the available Epi-Scores.</p>",
     "help-modal-header": "Explanation",
     "help-modal-close-button": "close",
-    "help-modal-show-button": "show help"
+    "help-modal-show-button": "show help",
+    "epi-scorer-genetic": "Genetic metrics",
+    "epi-scorer-5-gen": "5 Generation",
+    "epi-scorer-avk-anchestors": "AVK anchestors",
+    "epi-scorer-epi-progeny": "epilepsy progeny from",
+    "epi-scorer-loading": "Loading ...",
+    "epi-scorer-loading-error": "Fehler",
+    "epi-scorer-vertical-pedigree": "vertical pedigree",
+    "epi-scorer-epileptic-dogs": "Select dogs affected by idiopathic epilepsy",
+    "epi-scorer-show-pedigree": "search",
+    "epi-scorer-legend": "Episcore legend",
+    "epi-scorer-legend-epidogs": "Dogs with direct progeny affected by epilepsy"
 }

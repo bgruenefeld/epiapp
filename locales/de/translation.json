@@ -15,5 +15,16 @@
     "help-modal-2": "<p>Ein Klick auf <1>Hund suchen</1> lädt die entsprechende Ahnentafel und zeigt sie mit den verfügbaren Epi-Scores an.</p>",
     "help-modal-header": "Erläuterungen",
     "help-modal-close-button": "Schliessen",
-    "help-modal-show-button": "Hilfe anzeigen"
+    "help-modal-show-button": "Hilfe anzeigen",
+    "epi-scorer-genetic": "Genetische Maße",
+    "epi-scorer-5-gen": "5 Generationen",
+    "epi-scorer-avk-anchestors": "AVK Ahnen",
+    "epi-scorer-epi-progeny": "Epilepsie Nachkommen von",
+    "epi-scorer-loading": "Lade Daten ...",
+    "epi-scorer-loading-error": "Fehler",
+    "epi-scorer-vertical-pedigree": "vertikale Ahnentafel",
+    "epi-scorer-epileptic-dogs": "Epilepsie erkrankte Hunde auswählen",
+    "epi-scorer-show-pedigree": "Suchen",
+    "epi-scorer-legend": "Episcore Legende",
+    "epi-scorer-legend-epidogs": "Hund mit direkten Epi Nachkommen"
 }
