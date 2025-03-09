@@ -35,9 +35,20 @@ app.get("/", (req, res) => {
 });
 
 
-app.get("/api/data", (req, res) => {
-  logIp(req)
-
+app.get("/api/data", async (req, res) => {
+  
+  const ip = logIp(req)
+  
+  if (!ip.startsWith("::ffff:") && ip !== "127.0.0.1") {
+    try {
+      const response = await fetch(`http://ipinfo.io/${ip}/json`);
+      const data = await response.json(); // JSON-Daten auslesen
+      console.log("IP-Info:", data);
+    } catch (error) {
+      console.error("Fehler beim Abrufen von IP-Info:", error);
+    }
+  }  
+  
   const service = new EpiDogATService()
   const dogs = service.getAllEpiDogs()
   res.json({ dogs });
@@ -83,7 +94,7 @@ app.listen(PORT, () => {
 });
 
 
-function logIp(req: Request) {
+function logIp(req: Request):string {
   const forwarded = req.headers["x-forwarded-for"];
   let userIp = "";
 
@@ -94,4 +105,5 @@ function logIp(req: Request) {
   }
 
   console.log("Nutzer-IP:", userIp);
+  return userIp;
 }
