@@ -66,8 +66,15 @@ const Home: React.FC = () => {
               </div>
               <h3>📊 COI Calculator</h3>        
               <p>{t('home-coi-desc')}</p>
-              <li className="icon-link"><Link to="/episcorer" className="icon-link">Coi Calculator</Link></li>
-            </div>  
+              <li className="icon-link"><Link to="/coi-calculator" className="icon-link">Coi Calculator</Link></li>
+            </div> 
+            <div className="feature col">
+              <div className="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+              </div>
+              <h3>📊 AVK Calculator</h3>        
+              <p>{t('home-coi-desc')}</p>
+              <li className="icon-link"><Link to="/coi-calculator" className="icon-link">AVK Calculator</Link></li>
+            </div> 
           </div>
           <footer className="bg-dark text-black text-right py-3">
             Backend Status: {backendStatus}
