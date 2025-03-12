@@ -4,7 +4,8 @@ import EpiScoreModal from "../components/EpiScoreModal"
 import EpiScoreBox from "../components/EpiScoreBox";
 import { Dog } from "../models/models";
 import { Progeny } from "../serverApi/scoreRepo";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next"; 
+import { useAuth } from "../context/AuthContext";
 // Definiere den Typ für die API-Daten
 
 declare global {
@@ -13,6 +14,7 @@ declare global {
   }
 }
 const CoiCalculator: React.FC = () => {
+  const { user } = useAuth();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [clickedText, setClickedText] = useState<string>("");
 
@@ -33,7 +35,14 @@ const CoiCalculator: React.FC = () => {
 
 
   const { t } = useTranslation(); 
-  
+
+  // const [shouldShow, setShouldShow] = useState(false);
+
+  // useEffect(() => {
+  //   console.log("useEffect triggered, user:", user);
+  //   setShouldShow(!!user);
+  // }, [user]);
+
   useEffect(() => {
     // Fetch-Daten abrufen
     const fetchEpiDogData = async () => {
@@ -259,13 +268,13 @@ const CoiCalculator: React.FC = () => {
               
               <div>
                 <hr></hr>
-                <h4>{t('epi-scorer-epi-progeny')} {dogName}:</h4>
+                <h4 className="blur-text">{t('epi-scorer-epi-progeny')} {dogName}:</h4>
                 {dogEpiProgeny.P&&(
                   <div>
                   <label>P:</label>
                   <ul>
                     {dogEpiProgeny.P.map((item, index) => (
-                      <li key={index}>{item}</li>
+                      <li className="blur-text" key={index}>{item}</li>
                     ))}
                   </ul>
                 </div>
@@ -276,7 +285,7 @@ const CoiCalculator: React.FC = () => {
                   <label>GP:</label>
                   <ul>
                     {dogEpiProgeny.GP.map((item, index) => (
-                      <li key={index}>{item}</li>
+                      <li className="blur-text" key={index}>{item}</li>
                     ))}
                   </ul>
                 </div>
@@ -286,7 +295,7 @@ const CoiCalculator: React.FC = () => {
                   <label>GGP:</label>
                   <ul>
                     {dogEpiProgeny.GGP.map((item, index) => (
-                      <li key={index}>{item}</li>
+                      <li className="blur-text" key={index}>{item}</li>
                     ))}
                   </ul>
                 </div>
@@ -296,7 +305,7 @@ const CoiCalculator: React.FC = () => {
                   <label>GGGP:</label>
                   <ul>
                     {dogEpiProgeny.GGGP.map((item, index) => (
-                      <li key={index}>{item}</li>
+                      <li className="blur-text" key={index}>{item}</li>
                     ))}
                   </ul>
                 </div>
@@ -306,7 +315,7 @@ const CoiCalculator: React.FC = () => {
                   <label>GGGGP:</label>
                   <ul>
                     {dogEpiProgeny.GGGGP.map((item, index) => (
-                      <li key={index}>{item}</li>
+                      <li className="blur-text" key={index}>{item}</li>
                     ))}
                   </ul>
                 </div>
@@ -347,7 +356,7 @@ const CoiCalculator: React.FC = () => {
           <div className="col-12">          
             <button onClick={handleFetchById} className="btn btn-primary">{t('epi-scorer-show-pedigree')}</button>
           </div>
-
+           
           <div className="col-12">        
             <select id="dog-select" value={selectedDog} onChange={handleChange} className="form-select">
                   <option value="">-- {t('epi-scorer-epileptic-dogs')} --</option>
@@ -358,6 +367,9 @@ const CoiCalculator: React.FC = () => {
                   ))}
             </select>
           </div>
+          
+          
+          
           <div className="col-12">
           <EpiScoreModal />          
           </div>

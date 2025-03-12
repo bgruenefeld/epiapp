@@ -30,20 +30,21 @@ export class EpiDogATService {
       public getAllEpiDogs():Dog[]{
 
         let epiDogs:Dog[]=[];
-        const filePath = path.join(__dirname, ".", "k9-urls.txt");
+        const filePath = path.join(__dirname, ".", "epi-dogs.csv");
         const content = fs.readFileSync(filePath, 'utf-8');
         epiDogs = content
               .split('\n')
               .filter(line => line.trim() !== '') // Leerzeilen ignorieren
               .map(line2 => {
-                const aDogLine = line2.split('\t');
-                const dogName = aDogLine[0];
-                const url = aDogLine[1];
+                const aDogLine = line2.split(',');
+                const dogName = aDogLine[1];
+                const url = aDogLine[2];
                 // if (!url || !url.includes("k9data")) {
                 //   console.error(`Ungültiges Format in Zeile: ${line2}`);
                 // }
                 return {name:dogName, link:url}
         });
+        console.log("getAllEpiDogs returns:", epiDogs.length)
         return epiDogs
       }
 
