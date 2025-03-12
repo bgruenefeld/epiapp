@@ -5,7 +5,7 @@ import EpiScoreBox from "../components/EpiScoreBox";
 import { Dog } from "../models/models";
 import { Progeny } from "../serverApi/scoreRepo";
 import { useTranslation } from "react-i18next"; 
-import { useAuth } from "../context/AuthContext";
+// import { useAuth } from "../context/AuthContext";
 // Definiere den Typ für die API-Daten
 
 declare global {
@@ -14,7 +14,7 @@ declare global {
   }
 }
 const CoiCalculator: React.FC = () => {
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [clickedText, setClickedText] = useState<string>("");
 
